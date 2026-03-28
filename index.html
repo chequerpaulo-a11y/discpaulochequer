@@ -1054,10 +1054,12 @@
 
 <script>
   // ── EmailJS ─────────────────────────────────────────────
-  // ATENÇÃO: substitua os valores abaixo com suas credenciais EmailJS
-  const EMAILJS_PUBLIC_KEY  = 'SEU_PUBLIC_KEY';   // Account > API Keys
-  const EMAILJS_SERVICE_ID  = 'SEU_SERVICE_ID';   // Email Services
-  const EMAILJS_TEMPLATE_ID = 'SEU_TEMPLATE_ID';  // Email Templates
+  const EMAILJS_PUBLIC_KEY  = 'a9-Dxx_YUDCftzJ41';
+  const EMAILJS_SERVICE_ID  = 'service_mzwe4wv';
+  const EMAILJS_TEMPLATE_ID = 'template_hprwuey';
+
+  // ── Cloudflare Worker (proxy Anthropic) ─────────────────
+  const WORKER_URL = 'https://crescer360-proxy.chequerpaulo.workers.dev';
 
   emailjs.init(EMAILJS_PUBLIC_KEY);
 
@@ -1201,6 +1203,70 @@ Q25 (realização):           ${data.q25}
     return data;
   }
 
+  // ── Gerar relatório via IA ───────────────────────────────
+  async function gerarRelatorio(data) {
+    const prompt = `Você é Paulo Chequer, consultor de negócios, mentor e especialista em comportamento humano. Você é o idealizador do Crescer 360°, metodologia que ajuda líderes e empresas a crescerem através de 4 pilares: Estratégia, Cultura, Liderança e Performance Individual.
+
+Um mentorado acabou de responder seu questionário de perfil comportamental. Gere um relatório de mentoria completo, personalizado e direto — sem enrolação, sem linguagem genérica de RH.
+
+DADOS DO MENTORADO:
+Nome: ${data.nome}
+Cargo: ${data.cargo || 'Não informado'}
+Empresa: ${data.empresa || 'Não informada'}
+Segmento: ${data.segmento || 'Não informado'}
+
+RESPOSTAS DO QUESTIONÁRIO:
+${data.resumo_disc}
+
+INSTRUÇÕES PARA O RELATÓRIO:
+
+Escreva em português brasileiro, tom direto e humano, como Paulo falaria numa sessão de mentoria. Estruture assim:
+
+1. PERFIL DISC
+- Perfil dominante e secundário com explicação do que isso significa na prática para esse líder
+- Como esse perfil se manifesta no dia a dia (pontos fortes e pontos cegos)
+- Como esse perfil impacta sua liderança e seus relacionamentos
+
+2. SABOTADORES MENTAIS ATIVOS
+- Identifique os 2 ou 3 sabotadores mais presentes com base nas respostas
+- Explique como cada um se manifesta na vida dessa pessoa especificamente
+- Dê um nome direto ao padrão (ex: "O medo de errar te paralisa antes de começar")
+
+3. ESTILO DE COMUNICAÇÃO
+- Como essa pessoa prefere se comunicar e ser comunicada
+- O que pode gerar atrito com outros perfis
+- Como Paulo deve se comunicar com ela nas sessões
+
+4. O QUE MOTIVA E DESMOTIVA
+- Gatilhos de energia e engajamento
+- O que drena e pode sabotar o processo de mentoria
+- Como usar isso a favor do desenvolvimento
+
+5. PONTOS CEGOS E DESAFIOS PRIORITÁRIOS
+- Os 2 ou 3 maiores desafios que vão aparecer na mentoria
+- O que essa pessoa provavelmente ainda não enxerga em si mesma
+
+6. RECOMENDAÇÕES PARA A MENTORIA
+- 3 a 5 direcionamentos práticos para Paulo usar nas primeiras sessões
+- Qual pilar do Crescer 360° (Estratégia, Cultura, Liderança, Performance Individual) deve ser o foco inicial
+
+Seja específico. Use o nome da pessoa. Evite frases genéricas. Escreva como quem conhece essa pessoa de verdade.`;
+
+    const response = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-opus-4-5',
+        max_tokens: 2000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error('Worker error: ' + response.status);
+    const result = await response.json();
+    return result.content[0].text;
+  }
+
   // ── Submit ───────────────────────────────────────────────
   document.getElementById('form').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -1213,11 +1279,17 @@ Q25 (realização):           ${data.q25}
 
     const btn = document.getElementById('btn-submit');
     btn.disabled = true;
-    btn.textContent = 'Enviando…';
+    btn.textContent = 'Gerando seu perfil…';
 
     const data = collectAnswers();
 
     try {
+      // 1. Gerar relatório por IA
+      btn.textContent = 'Analisando respostas…';
+      const relatorio = await gerarRelatorio(data);
+
+      // 2. Enviar e-mail com respostas + relatório
+      btn.textContent = 'Enviando…';
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         to_name: 'Paulo',
         nome_mentorado: data.nome,
@@ -1229,6 +1301,7 @@ Q25 (realização):           ${data.q25}
         disc_secondary: data.disc_secondary,
         disc_scores: data.disc_scores,
         resumo_completo: data.resumo_disc,
+        relatorio_ia: relatorio,
       });
 
       document.getElementById('form').style.display = 'none';
@@ -1236,10 +1309,11 @@ Q25 (realização):           ${data.q25}
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
-      console.error('EmailJS error:', err);
+      console.error('Erro:', err);
       btn.disabled = false;
       btn.textContent = 'Enviar respostas';
       document.getElementById('error-msg').style.display = 'block';
+      document.getElementById('error-msg').textContent = 'Ocorreu um erro ao processar. Tente novamente ou entre em contato com Paulo.';
     }
   });
 
