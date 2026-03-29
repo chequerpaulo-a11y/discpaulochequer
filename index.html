@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
   :root {
@@ -300,8 +299,38 @@
   }
 
   #relatorio-conteudo {
-    white-space: pre-wrap; font-size: 14px;
-    line-height: 1.9; color: var(--ink-2);
+    font-size: 14px; line-height: 1.8; color: var(--ink-2);
+  }
+  #relatorio-conteudo h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; font-weight: 400; color: var(--ink);
+    margin: 28px 0 10px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  #relatorio-conteudo h2:first-child { margin-top: 0; }
+  #relatorio-conteudo h3 {
+    font-size: 12px; font-weight: 500; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 16px 0 6px;
+  }
+  #relatorio-conteudo p { margin-bottom: 12px; line-height: 1.85; }
+  #relatorio-conteudo ul, #relatorio-conteudo ol {
+    padding-left: 20px; margin-bottom: 14px;
+  }
+  #relatorio-conteudo li { margin-bottom: 6px; line-height: 1.7; }
+  #relatorio-conteudo strong { font-weight: 500; color: var(--ink); }
+
+  @media print {
+    body { background: white !important; }
+    body::before { display: none !important; }
+    header, .progress-bar-wrap, #form, .pdf-actions { display: none !important; }
+    #success-screen { display: block !important; padding: 0 !important; }
+    .success-top { text-align: left !important; margin-bottom: 20px !important; }
+    .success-icon { display: none !important; }
+    #relatorio-box { border: none !important; padding: 0 !important; }
+    #relatorio-loading { display: none !important; }
+    .btn-pdf { display: none !important; }
+    @page { margin: 20mm; }
   }
 
   .loading-relatorio {
@@ -333,30 +362,6 @@
   .btn-pdf:hover { background: #a8520f; transform: translateY(-1px); }
   .btn-pdf:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
 
-  /* PDF export styling */
-  #relatorio-pdf-content {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px; line-height: 1.8; color: #1a1814;
-    padding: 40px;
-  }
-
-  #relatorio-pdf-content .pdf-header {
-    border-bottom: 2px solid #c4611a;
-    padding-bottom: 20px; margin-bottom: 30px;
-  }
-
-  #relatorio-pdf-content .pdf-title {
-    font-size: 22px; font-weight: 500;
-    color: #1a1814; margin-bottom: 6px;
-  }
-
-  #relatorio-pdf-content .pdf-sub {
-    font-size: 12px; color: #7a7670;
-  }
-
-  #relatorio-pdf-content .pdf-body {
-    white-space: pre-wrap; font-size: 13px; line-height: 1.9;
-  }
 </style>
 </head>
 
@@ -864,14 +869,6 @@
 </main>
 </div>
 
-<!-- Hidden PDF content -->
-<div id="relatorio-pdf-content" style="display:none">
-  <div class="pdf-header">
-    <div class="pdf-title" id="pdf-nome-title"></div>
-    <div class="pdf-sub">Relatório de Perfil Comportamental · Crescer 360° · Paulo Chequer</div>
-  </div>
-  <div class="pdf-body" id="pdf-body-text"></div>
-</div>
 
 <script>
   const EMAILJS_PUBLIC_KEY  = 'a9-Dxx_YUDCftzJ41';
@@ -987,75 +984,102 @@ Q30 (o que mudaria em si): ${data.q30}
     return data;
   }
 
-  // ── Gerar relatório ──────────────────────────────────────
-  async function gerarRelatorio(data) {
-    const prompt = `Você é Paulo Chequer, consultor de negócios, mentor e especialista em comportamento humano. Idealizador do Crescer 360°, metodologia com 4 pilares: Estratégia, Cultura, Liderança e Performance Individual.
 
-Um mentorado respondeu seu questionário de perfil comportamental. Gere um relatório completo, personalizado e direto — sem enrolação, sem linguagem genérica de RH. Use o nome da pessoa em todo o relatório.
+  // ── Markdown simples → HTML ─────────────────────────────
+  function markdownToHtml(text) {
+    let html = text
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>');
 
-DADOS DO MENTORADO:
-Nome: ${data.nome}
-Cargo: ${data.cargo || 'Não informado'}
-Empresa: ${data.empresa || 'Não informada'}
-Segmento: ${data.segmento || 'Não informado'}
+    // listas
+    html = html.replace(/^[-•] (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>[^]*?<\/li>\n?)+/g, m => '<ul>' + m + '</ul>');
 
-RESPOSTAS:
-${data.resumo_disc}
-
-ESTRUTURA DO RELATÓRIO:
-
-1. PERFIL DISC
-- Perfil dominante e secundário — o que significa na prática para ${data.nome}
-- Como esse perfil aparece no dia a dia: pontos fortes e pontos cegos
-- Como impacta liderança e relacionamentos
-
-2. SABOTADORES MENTAIS ATIVOS
-- Os 2 ou 3 sabotadores mais presentes com base nas respostas
-- Como cada um se manifesta especificamente em ${data.nome}
-- Nome direto do padrão (ex: "O medo de errar te paralisa antes de começar")
-
-3. ESTILO DE COMUNICAÇÃO
-- Como ${data.nome} prefere se comunicar e ser comunicado(a)
-- O que gera atrito com outros perfis
-- Como Paulo deve se comunicar com ${data.nome} nas sessões
-
-4. O QUE MOTIVA E DESMOTIVA
-- Gatilhos de energia e engajamento
-- O que drena e pode sabotar o processo
-- Como usar isso a favor do desenvolvimento
-
-5. LIDERANÇA — PADRÕES E BLOQUEIOS
-- Como ${data.nome} exerce a liderança hoje
-- Qual o principal bloqueio identificado
-- O que precisa ser trabalhado com prioridade
-
-6. PONTOS CEGOS
-- O que ${data.nome} provavelmente ainda não enxerga em si mesmo(a)
-- Onde está o maior potencial inexplorado
-
-7. RECOMENDAÇÕES PARA A MENTORIA
-- 3 a 5 direcionamentos práticos para as primeiras sessões
-- Qual pilar do Crescer 360° (Estratégia, Cultura, Liderança ou Performance Individual) deve ser o foco inicial e por quê
-
-Seja específico. Evite frases genéricas. Escreva como quem conhece ${data.nome} de verdade.`;
-
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-opus-4-5',
-        max_tokens: 4000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if (!response.ok) throw new Error('Worker error: ' + response.status);
-    const result = await response.json();
-    return result.content[0].text;
+    // parágrafos
+    const lines = html.split('\n');
+    const out = [];
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) { out.push(''); continue; }
+      if (/^<(h[23]|ul|li|\/ul)/.test(t)) { out.push(t); continue; }
+      out.push('<p>' + t + '</p>');
+    }
+    return out.join('\n');
   }
 
-  // ── Submit ───────────────────────────────────────────────
-  let relatorioTexto = '';
+  // ── Gerar dois relatórios em paralelo ────────────────────
+  async function gerarRelatorios(data) {
+    const ctx = `DADOS:\nNome: ${data.nome}\nCargo: ${data.cargo||'N/I'}\nEmpresa: ${data.empresa||'N/I'}\nSegmento: ${data.segmento||'N/I'}\n\n${data.resumo_disc}`;
+
+    const pMentorado = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
+Gere um relatório de perfil comportamental para o próprio mentorado ler.
+Tom: direto, humano, sem jargão de RH. Use o nome ${data.nome}. Use markdown (## títulos, **negrito**).
+NÃO inclua instruções para o mentor nem seções sobre como conduzir sessões.
+
+${ctx}
+
+## 1. Seu perfil DISC
+Perfil dominante e secundário de ${data.nome} na prática. Pontos fortes e pontos cegos reais.
+
+## 2. Seus sabotadores mentais
+Os 2 ou 3 mais ativos. Dê nome direto ao padrão. Como cada um aparece na vida de ${data.nome}.
+
+## 3. Seu estilo de comunicação
+Como ${data.nome} prefere receber e transmitir informações. O que pode gerar atrito com outros.
+
+## 4. O que te move — e o que te trava
+O que energiza ${data.nome} e o que drena. Como isso impacta a performance.
+
+## 5. Sua liderança hoje
+Como ${data.nome} exerce liderança. Padrão identificado. Principal bloqueio.
+
+## 6. Seus pontos cegos
+O que ${data.nome} provavelmente ainda não enxerga. Maior potencial inexplorado.
+
+Seja específico e direto. Sem mencionar Paulo nem a mentoria.`;
+
+    const pMentor = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
+Gere um relatório EXCLUSIVO PARA O MENTOR sobre ${data.nome}. Este texto NÃO será visto pelo mentorado.
+Use markdown (## títulos, **negrito**).
+
+${ctx}
+
+## Leitura estratégica do perfil
+O que Paulo precisa saber antes da 1ª sessão. O que as respostas revelam além do óbvio.
+
+## Como conduzir as sessões com ${data.nome}
+Instruções práticas: abordagem, ritmo, tom, o que funciona e o que vai travar esse perfil.
+
+## Paradoxos e pontos cegos críticos
+Conflitos internos que ${data.nome} carrega e provavelmente não percebe. O que confrontar com cuidado.
+
+## Como usar a motivação a favor do processo
+Gatilhos específicos para engajar ${data.nome} de verdade na mentoria.
+
+## Recomendações para as primeiras sessões
+3 a 5 direcionamentos práticos. Qual pilar do Crescer 360° focar primeiro e por quê.`;
+
+    const [r1, r2] = await Promise.all([
+      fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:3000, messages:[{role:'user',content:pMentorado}] }) }),
+      fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:2000, messages:[{role:'user',content:pMentor}] }) })
+    ]);
+
+    if (!r1.ok) throw new Error('Worker mentorado: ' + r1.status);
+    if (!r2.ok) throw new Error('Worker mentor: ' + r2.status);
+
+    const j1 = await r1.json();
+    const j2 = await r2.json();
+    return { mentorado: j1.content[0].text, mentor: j2.content[0].text };
+  }
+
+    // ── Submit ───────────────────────────────────────────────
+  let relatorioMentoradoTexto = '';
   let nomeParaPDF = '';
 
   document.getElementById('form').addEventListener('submit', async function(e) {
@@ -1075,25 +1099,25 @@ Seja específico. Evite frases genéricas. Escreva como quem conhece ${data.nome
     nomeParaPDF = data.nome;
 
     try {
-      // 1. Mostrar tela de sucesso imediatamente com loading
+      // 1. Mostrar tela de sucesso com loading
       document.getElementById('form').style.display = 'none';
       document.getElementById('success-screen').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // 2. Gerar relatório por IA
-      const relatorio = await gerarRelatorio(data);
-      relatorioTexto = relatorio;
+      // 2. Gerar os dois relatórios em paralelo
+      const { mentorado, mentor } = await gerarRelatorios(data);
+      relatorioMentoradoTexto = mentorado;
 
-      // 3. Exibir relatório na tela
+      // 3. Renderizar relatório do mentorado com markdown
       document.getElementById('relatorio-loading').style.display = 'none';
       const conteudo = document.getElementById('relatorio-conteudo');
       conteudo.style.display = 'block';
-      conteudo.textContent = relatorio;
+      conteudo.innerHTML = markdownToHtml(mentorado);
 
       // 4. Habilitar botão PDF
       document.getElementById('btn-pdf').disabled = false;
 
-      // 5. Enviar e-mail em paralelo (sem bloquear a UI)
+      // 5. Enviar e-mail com AMBOS os relatórios (sem bloquear a UI)
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         to_name: 'Paulo',
         nome_mentorado: data.nome,
@@ -1105,7 +1129,8 @@ Seja específico. Evite frases genéricas. Escreva como quem conhece ${data.nome
         disc_secondary: data.disc_secondary,
         disc_scores: data.disc_scores,
         resumo_completo: data.resumo_disc,
-        relatorio_ia: relatorio,
+        relatorio_mentorado: mentorado,
+        relatorio_mentor: mentor,
       }).catch(err => console.error('EmailJS error:', err));
 
     } catch (err) {
@@ -1115,31 +1140,9 @@ Seja específico. Evite frases genéricas. Escreva como quem conhece ${data.nome
     }
   });
 
-  // ── Download PDF ─────────────────────────────────────────
+  // ── Download PDF via print ────────────────────────────────
   function downloadPDF() {
-    const btn = document.getElementById('btn-pdf');
-    btn.disabled = true;
-    btn.textContent = 'Gerando PDF…';
-
-    document.getElementById('pdf-nome-title').textContent = nomeParaPDF + ' — Perfil Comportamental';
-    document.getElementById('pdf-body-text').textContent = relatorioTexto;
-
-    const el = document.getElementById('relatorio-pdf-content');
-    el.style.display = 'block';
-
-    const opt = {
-      margin: [15, 15, 15, 15],
-      filename: `Perfil_Comportamental_${nomeParaPDF.replace(/\s+/g,'_')}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(el).save().then(() => {
-      el.style.display = 'none';
-      btn.disabled = false;
-      btn.textContent = '⬇ Baixar PDF';
-    });
+    window.print();
   }
 
   // Reset border on typing
