@@ -3,1154 +3,879 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questionário de Perfil Comportamental · Crescer 360°</title>
+<title>Perfil Comportamental · Crescer 360°</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <style>
   :root {
-    --ink: #1a1814;
-    --ink-2: #3d3a34;
-    --ink-3: #7a7670;
-    --paper: #f7f4ef;
-    --paper-2: #ede9e1;
-    --paper-3: #e0dbd0;
-    --accent: #c4611a;
-    --accent-light: #f5e8dc;
-    --border: rgba(26,24,20,0.12);
-    --radius: 12px;
+    --ink: #16140f;
+    --ink-2: #3a3830;
+    --ink-3: #7a7568;
+    --cream: #f9f6f0;
+    --cream-2: #f0ebe0;
+    --cream-3: #e4ddd0;
+    --accent: #b85c1a;
+    --accent-light: #f7ece0;
+    --accent-dark: #8a4010;
+    --green: #2a6b4a;
+    --border: rgba(22,20,15,0.1);
+    --radius: 10px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--paper);
+    background: var(--cream);
     color: var(--ink);
     min-height: 100vh;
     font-weight: 300;
   }
 
-  body::before {
+  /* Textura de papel */
+  body::after {
     content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.5;
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: 0.6;
   }
 
   .page { position: relative; z-index: 1; }
 
+  /* HEADER */
   header {
     background: var(--ink);
-    color: var(--paper);
-    padding: 48px 24px 40px;
+    padding: 56px 24px 48px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .logo-tag {
-    display: inline-block;
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 40px,
+      rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px
+    );
+  }
+
+  .logo-mark {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .logo-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .logo-text {
     font-size: 11px; font-weight: 500;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 20px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(249,246,240,0.5);
   }
 
   header h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 5vw, 44px);
-    font-weight: 400; line-height: 1.15;
-    color: var(--paper); margin-bottom: 16px;
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300; line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 16px;
   }
 
-  header h1 em { font-style: italic; color: #d4884a; }
+  header h1 em {
+    font-style: italic;
+    color: #e08040;
+  }
 
   header p {
-    font-size: 15px; color: rgba(247,244,239,0.6);
-    max-width: 480px; margin: 0 auto 28px; line-height: 1.7;
+    font-size: 15px; color: rgba(249,246,240,0.55);
+    max-width: 440px; margin: 0 auto 32px; line-height: 1.7;
   }
 
-  .meta-pills { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-
-  .pill {
-    font-size: 12px; padding: 4px 14px;
-    border-radius: 20px; border: 1px solid rgba(247,244,239,0.2);
-    color: rgba(247,244,239,0.7);
+  .chips-row {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
   }
 
-  .progress-bar-wrap {
-    background: var(--paper-2);
+  .chip {
+    font-size: 11px; padding: 4px 14px; border-radius: 20px;
+    border: 1px solid rgba(249,246,240,0.15);
+    color: rgba(249,246,240,0.5);
+    letter-spacing: 0.04em;
+  }
+
+  /* PROGRESS */
+  .prog-wrap {
+    background: var(--cream-2);
     border-bottom: 1px solid var(--border);
-    padding: 14px 24px;
+    padding: 12px 24px;
     position: sticky; top: 0; z-index: 100;
   }
 
-  .progress-inner {
-    max-width: 720px; margin: 0 auto;
-    display: flex; align-items: center; gap: 14px;
-  }
-
-  .progress-track {
-    flex: 1; height: 4px;
-    background: var(--paper-3); border-radius: 2px; overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%; background: var(--accent);
-    border-radius: 2px; width: 0%; transition: width 0.4s ease;
-  }
-
-  .progress-label {
-    font-size: 12px; color: var(--ink-3);
-    white-space: nowrap; min-width: 60px; text-align: right;
-  }
-
-  main { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
-
-  .info-section {
-    background: white; border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 32px; margin-bottom: 40px;
-  }
-
-  .info-section h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px; font-weight: 400; margin-bottom: 20px;
-  }
-
-  .fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 500px) { .fields-row { grid-template-columns: 1fr; } }
-
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field.full { grid-column: 1 / -1; }
-
-  .field label {
-    font-size: 12px; font-weight: 500;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3);
-  }
-
-  .field input {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 300; color: var(--ink);
-    background: var(--paper); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 14px; outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .field input:focus { border-color: var(--accent); }
-
-  .bloco { margin-bottom: 48px; }
-
-  .bloco-header {
+  .prog-inner {
+    max-width: 760px; margin: 0 auto;
     display: flex; align-items: center; gap: 12px;
-    margin-bottom: 24px; padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
   }
 
-  .bloco-badge {
-    font-size: 10px; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+  .prog-track {
+    flex: 1; height: 3px;
+    background: var(--cream-3); border-radius: 2px; overflow: hidden;
   }
 
-  .badge-disc { background: #fff3eb; color: #c4611a; border: 1px solid #f5d5bb; }
-  .badge-sab  { background: #fdf5e4; color: #8a5a1a; border: 1px solid #f0dcaa; }
-  .badge-com  { background: #e8f5f0; color: #1a5a4a; border: 1px solid #b8ddd0; }
-  .badge-mot  { background: #eaecf5; color: #3a4a8a; border: 1px solid #c0c8e8; }
-  .badge-lid  { background: #f5eaf5; color: #7a3a7a; border: 1px solid #ddbddd; }
-
-  .bloco-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px; font-weight: 400; color: var(--ink);
+  .prog-fill {
+    height: 100%; background: var(--accent);
+    border-radius: 2px; width: 0%; transition: width 0.35s ease;
   }
 
-  .bloco-range { font-size: 12px; color: var(--ink-3); margin-left: auto; white-space: nowrap; }
+  .prog-label { font-size: 11px; color: var(--ink-3); white-space: nowrap; min-width: 56px; text-align: right; }
 
-  .q-card {
+  /* MAIN */
+  main { max-width: 760px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* DADOS */
+  .dados-card {
     background: white; border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 24px 28px;
+    border-radius: 14px; padding: 32px; margin-bottom: 48px;
+  }
+
+  .dados-card h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px; font-weight: 300; margin-bottom: 22px; color: var(--ink);
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
+  .col-full { grid-column: 1 / -1; }
+
+  .fld { display: flex; flex-direction: column; gap: 5px; }
+
+  .fld label {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3);
+  }
+
+  .fld input {
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300;
+    color: var(--ink); background: var(--cream);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; outline: none; transition: border-color 0.2s;
+  }
+
+  .fld input:focus { border-color: var(--accent); }
+
+  /* INSTRUÇÃO */
+  .instrucao {
+    background: var(--accent-light);
+    border: 1px solid rgba(184,92,26,0.2);
+    border-radius: 12px; padding: 20px 24px;
+    margin-bottom: 40px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+
+  .instrucao-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .instrucao p { font-size: 14px; line-height: 1.7; color: var(--ink-2); }
+  .instrucao strong { font-weight: 500; color: var(--ink); }
+
+  /* GRUPO DE PALAVRAS */
+  .grupo {
+    background: white; border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px 28px;
     margin-bottom: 16px; transition: border-color 0.2s;
   }
 
-  .q-card.answered { border-color: rgba(196,97,26,0.3); }
-  .q-card.invalid { border-color: #e05050; background: #fff8f8; }
+  .grupo.completo { border-color: rgba(42,107,74,0.35); }
+  .grupo.invalido { border-color: #d04040; background: #fff9f9; }
 
-  .q-top { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
+  .grupo-top {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  }
 
-  .q-number {
+  .grupo-num {
     font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
     color: var(--accent); background: var(--accent-light);
-    padding: 3px 9px; border-radius: 20px; white-space: nowrap; margin-top: 2px;
+    padding: 3px 10px; border-radius: 20px; white-space: nowrap;
   }
 
-  .q-text { font-size: 16px; line-height: 1.6; color: var(--ink); font-weight: 400; }
+  .grupo-instrucao { font-size: 13px; color: var(--ink-3); }
 
-  .options-list { display: flex; flex-direction: column; gap: 8px; }
-
-  .opt-label {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 12px 16px; border: 1px solid var(--border);
-    border-radius: 9px; cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-    font-size: 14px; line-height: 1.5; color: var(--ink-2);
+  .palavras-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
   }
 
-  .opt-label:hover { background: var(--accent-light); border-color: rgba(196,97,26,0.3); }
+  .palavra-item { position: relative; }
 
-  .opt-label input[type="radio"] {
-    appearance: none; width: 18px; height: 18px;
-    border: 1.5px solid var(--border); border-radius: 50%;
-    flex-shrink: 0; margin-top: 1px; position: relative;
-    transition: border-color 0.15s, background 0.15s; cursor: pointer;
+  .palavra-item input[type="checkbox"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
   }
 
-  .opt-label input[type="radio"]:checked { border-color: var(--accent); background: var(--accent); }
-  .opt-label input[type="radio"]:checked::after {
-    content: ''; position: absolute; inset: 3px;
-    background: white; border-radius: 50%;
-  }
-
-  .opt-label:has(input:checked) {
-    background: var(--accent-light); border-color: var(--accent);
-    color: var(--ink); font-weight: 400;
-  }
-
-  .opt-letter { font-size: 11px; font-weight: 500; color: var(--ink-3); min-width: 14px; margin-top: 1px; }
-
-  .scale-wrap { display: flex; flex-direction: column; gap: 8px; }
-
-  .scale-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
-  .scale-end { font-size: 12px; color: var(--ink-3); min-width: 60px; }
-  .scale-end.right { text-align: right; }
-
-  .scale-btns { display: flex; gap: 8px; flex: 1; justify-content: center; }
-
-  .scale-btn-label { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-  .scale-btn-label input[type="radio"] { display: none; }
-
-  .scale-circle {
-    width: 44px; height: 44px; border-radius: 50%;
-    border: 1.5px solid var(--border);
+  .palavra-label {
     display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 400; color: var(--ink-2);
-    transition: all 0.15s; cursor: pointer; background: var(--paper);
+    padding: 10px 12px; border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-size: 14px; font-weight: 400; color: var(--ink-2);
+    cursor: pointer; text-align: center; line-height: 1.3;
+    transition: all 0.15s; user-select: none;
+    background: var(--cream);
+    min-height: 44px;
   }
 
-  .scale-btn-label:hover .scale-circle { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
-  .scale-btn-label input:checked ~ .scale-circle { background: var(--accent); border-color: var(--accent); color: white; font-weight: 500; }
-
-  .validation-msg { font-size: 12px; color: #e05050; margin-top: 10px; display: none; }
-  .q-card.invalid .validation-msg { display: block; }
-
-  .submit-section { text-align: center; padding: 40px 0; }
-
-  .submit-note { font-size: 13px; color: var(--ink-3); margin-bottom: 24px; line-height: 1.6; }
-
-  .btn-submit {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px; font-weight: 500; color: white;
-    background: var(--ink); border: none; border-radius: 10px;
-    padding: 16px 48px; cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
+  .palavra-label:hover {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent-dark);
   }
 
-  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
-  .btn-submit:active { transform: translateY(0); }
-  .btn-submit:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
+  /* MAIS representa */
+  .palavra-item.tipo-mais input:checked + .palavra-label {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    font-weight: 500;
+  }
 
-  .error-msg {
+  /* MENOS representa */
+  .palavra-item.tipo-menos input:checked + .palavra-label {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: white;
+    font-weight: 500;
+  }
+
+  /* Separador entre mais/menos */
+  .sep-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-3);
+    margin: 14px 0 8px; display: flex; align-items: center; gap: 10px;
+  }
+
+  .sep-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .validation-msg {
+    font-size: 12px; color: #d04040;
+    margin-top: 10px; display: none;
+  }
+
+  .grupo.invalido .validation-msg { display: block; }
+
+  /* Legenda */
+  .legenda {
+    display: flex; gap: 20px; margin-bottom: 32px; flex-wrap: wrap;
+  }
+
+  .legenda-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--ink-3);
+  }
+
+  .legenda-cor {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1.5px solid transparent;
+  }
+
+  .legenda-cor.mais { background: var(--accent); border-color: var(--accent); }
+  .legenda-cor.menos { background: var(--ink); border-color: var(--ink); }
+
+  /* SUBMIT */
+  .submit-area { text-align: center; padding: 48px 0 0; }
+
+  .submit-note {
+    font-size: 13px; color: var(--ink-3); margin-bottom: 24px; line-height: 1.6;
+  }
+
+  .btn-enviar {
+    font-family: 'DM Sans', sans-serif; font-size: 16px;
+    font-weight: 500; color: white; background: var(--ink);
+    border: none; border-radius: 10px; padding: 16px 52px;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-enviar:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-enviar:active { transform: none; }
+  .btn-enviar:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
+
+  .erro-msg {
     display: none; background: #fdf0f0; border: 1px solid #f5c0c0;
     border-radius: 8px; padding: 12px 16px; font-size: 14px;
-    color: #a03030; margin-top: 16px; text-align: left;
+    color: #a03030; margin-top: 16px;
   }
 
-  .req { color: var(--accent); }
+  /* TELA DE RESULTADO */
+  #tela-resultado { display: none; padding: 60px 0 80px; }
 
-  /* ── SUCCESS SCREEN ── */
-  #success-screen { display: none; padding: 60px 0 80px; }
+  .resultado-topo { text-align: center; margin-bottom: 40px; }
 
-  .success-top { text-align: center; margin-bottom: 40px; }
-
-  .success-icon {
+  .check-circle {
     width: 56px; height: 56px; border-radius: 50%;
-    background: #e8f5f0; color: #2a7a5c;
+    background: #e6f4ed; color: var(--green);
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 20px; font-size: 22px; font-weight: 500;
   }
 
-  #success-screen h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px; font-weight: 400; margin-bottom: 8px;
+  #tela-resultado h2 {
+    font-family: 'Fraunces', serif; font-size: 30px;
+    font-weight: 300; margin-bottom: 8px;
   }
 
-  .success-sub { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
+  .resultado-sub { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
 
-  /* Relatório ao vivo */
-  #relatorio-box {
+  /* Card do relatório */
+  #relatorio-card {
     background: white; border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 40px; margin-bottom: 24px;
+    border-radius: 14px; padding: 40px; margin-bottom: 24px;
   }
 
-  #relatorio-box h3 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px; font-weight: 400; color: var(--ink);
-    margin-bottom: 24px; padding-bottom: 16px;
+  #relatorio-card h3 {
+    font-family: 'Fraunces', serif; font-size: 22px;
+    font-weight: 300; color: var(--ink);
+    margin-bottom: 28px; padding-bottom: 18px;
     border-bottom: 1px solid var(--border);
   }
 
-  #relatorio-conteudo {
-    font-size: 14px; line-height: 1.8; color: var(--ink-2);
-  }
+  #relatorio-conteudo { font-size: 14px; line-height: 1.85; color: var(--ink-2); }
+
   #relatorio-conteudo h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px; font-weight: 400; color: var(--ink);
+    font-family: 'Fraunces', serif; font-size: 19px;
+    font-weight: 300; color: var(--ink);
     margin: 28px 0 10px; padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
   }
+
   #relatorio-conteudo h2:first-child { margin-top: 0; }
+
   #relatorio-conteudo h3 {
-    font-size: 12px; font-weight: 500; color: var(--accent);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin: 16px 0 6px;
+    font-size: 11px; font-weight: 500; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.09em;
+    margin: 16px 0 6px; border: none; padding: 0;
   }
-  #relatorio-conteudo p { margin-bottom: 12px; line-height: 1.85; }
-  #relatorio-conteudo ul, #relatorio-conteudo ol {
-    padding-left: 20px; margin-bottom: 14px;
-  }
-  #relatorio-conteudo li { margin-bottom: 6px; line-height: 1.7; }
+
+  #relatorio-conteudo p { margin-bottom: 12px; }
+  #relatorio-conteudo ul, #relatorio-conteudo ol { padding-left: 20px; margin-bottom: 14px; }
+  #relatorio-conteudo li { margin-bottom: 6px; }
   #relatorio-conteudo strong { font-weight: 500; color: var(--ink); }
 
+  .loading-box {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--ink-3); font-size: 14px; padding: 16px 0;
+  }
+
+  .spin {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--cream-3); border-top-color: var(--accent);
+    animation: giro 0.8s linear infinite; flex-shrink: 0;
+  }
+
+  @keyframes giro { to { transform: rotate(360deg); } }
+
+  .acoes-pdf { text-align: center; margin-top: 8px; }
+
+  .btn-pdf {
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    font-weight: 500; color: white; background: var(--accent);
+    border: none; border-radius: 10px; padding: 14px 40px;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-pdf:hover { background: var(--accent-dark); transform: translateY(-1px); }
+  .btn-pdf:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
+
+  /* PRINT */
   @media print {
     body { background: white !important; }
-    body::before { display: none !important; }
-    header, .progress-bar-wrap, #form, .pdf-actions { display: none !important; }
-    #success-screen { display: block !important; padding: 0 !important; }
-    .success-top { text-align: left !important; margin-bottom: 20px !important; }
-    .success-icon { display: none !important; }
-    #relatorio-box { border: none !important; padding: 0 !important; }
-    #relatorio-loading { display: none !important; }
+    body::after { display: none !important; }
+    header, .prog-wrap, #form-perfil, .acoes-pdf { display: none !important; }
+    #tela-resultado { display: block !important; padding: 0 !important; }
+    .resultado-topo { margin-bottom: 20px !important; }
+    .check-circle { display: none !important; }
+    #relatorio-card { border: none !important; padding: 0 !important; }
     .btn-pdf { display: none !important; }
     @page { margin: 20mm; }
   }
 
-  .loading-relatorio {
-    display: flex; align-items: center; gap: 12px;
-    color: var(--ink-3); font-size: 14px; padding: 20px 0;
-  }
-
-  .spinner {
-    width: 20px; height: 20px;
-    border: 2px solid var(--paper-3);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite; flex-shrink: 0;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .pdf-actions { text-align: center; margin-top: 8px; }
-
-  .btn-pdf {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; color: white;
-    background: var(--accent); border: none; border-radius: 10px;
-    padding: 14px 36px; cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-
-  .btn-pdf:hover { background: #a8520f; transform: translateY(-1px); }
-  .btn-pdf:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
-
+  .req { color: var(--accent); }
 </style>
 </head>
-
 <body>
 <div class="page">
 
 <header>
-  <div class="logo-tag">Crescer 360° · Mentoria Individual</div>
-  <h1>Questionário de<br><em>Perfil Comportamental</em></h1>
-  <p>Responda com sinceridade. Não há resposta certa ou errada. Suas respostas serão usadas para personalizar a sua mentoria.</p>
-  <div class="meta-pills">
-    <span class="pill">30 perguntas</span>
-    <span class="pill">15–20 minutos</span>
-    <span class="pill">DISC + Sabotadores + Liderança</span>
+  <div class="logo-mark">
+    <div class="logo-dot"></div>
+    <span class="logo-text">Crescer 360° · Mentoria</span>
+  </div>
+  <h1>Quem você é<br><em>de verdade?</em></h1>
+  <p>Escolha as palavras que mais e menos te representam. Sem pensar demais — a primeira resposta costuma ser a mais verdadeira.</p>
+  <div class="chips-row">
+    <span class="chip">30 grupos</span>
+    <span class="chip">5–8 minutos</span>
+    <span class="chip">DISC + Sabotadores</span>
   </div>
 </header>
 
-<div class="progress-bar-wrap">
-  <div class="progress-inner">
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill"></div>
-    </div>
-    <div class="progress-label" id="progress-label">0 de 30</div>
+<div class="prog-wrap">
+  <div class="prog-inner">
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="prog-label" id="prog-label">0 de 30</div>
   </div>
 </div>
 
 <main>
-  <form id="form" novalidate>
+<form id="form-perfil" novalidate>
 
-    <!-- DADOS -->
-    <div class="info-section">
-      <h2>Seus dados</h2>
-      <div class="fields-row">
-        <div class="field">
-          <label>Nome completo <span class="req">*</span></label>
-          <input type="text" name="nome" id="nome" placeholder="Como prefere ser chamado(a)" required>
-        </div>
-        <div class="field">
-          <label>Cargo / função</label>
-          <input type="text" name="cargo" id="cargo" placeholder="Ex: Gerente, Sócio, Coordenador">
-        </div>
-        <div class="field">
-          <label>Empresa</label>
-          <input type="text" name="empresa" id="empresa" placeholder="Nome da empresa">
-        </div>
-        <div class="field">
-          <label>Segmento</label>
-          <input type="text" name="segmento" id="segmento" placeholder="Ex: Varejo, Serviços, Indústria">
-        </div>
-        <div class="field full">
-          <label>E-mail <span class="req">*</span></label>
-          <input type="email" name="email_mentorado" id="email_mentorado" placeholder="seu@email.com" required>
-        </div>
+  <!-- DADOS -->
+  <div class="dados-card">
+    <h2>Seus dados</h2>
+    <div class="grid-2">
+      <div class="fld">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" id="nome" placeholder="Como prefere ser chamado(a)" required>
       </div>
-    </div>
-
-    <!-- BLOCO 1: DISC (Q1–Q8) -->
-    <div class="bloco">
-      <div class="bloco-header">
-        <span class="bloco-badge badge-disc">DISC</span>
-        <span class="bloco-title">Perfil comportamental</span>
-        <span class="bloco-range">Q1 – Q8</span>
+      <div class="fld">
+        <label>Cargo / função</label>
+        <input type="text" id="cargo" placeholder="Ex: Gerente, Sócio, Diretor">
       </div>
-
-      <div class="q-card" id="card-q1">
-        <div class="q-top"><span class="q-number">Q1</span><span class="q-text">Quando preciso tomar uma decisão importante, eu geralmente…</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q1" value="D"><span class="opt-letter">A</span>Decido rápido, confio no meu instinto e assumo os riscos</label>
-          <label class="opt-label"><input type="radio" name="q1" value="I"><span class="opt-letter">B</span>Converso com pessoas e ouço opiniões antes de decidir</label>
-          <label class="opt-label"><input type="radio" name="q1" value="S"><span class="opt-letter">C</span>Prefiro ter tempo para pensar e garantir estabilidade</label>
-          <label class="opt-label"><input type="radio" name="q1" value="C"><span class="opt-letter">D</span>Analiso dados, peso prós e contras com cuidado</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
+      <div class="fld">
+        <label>Empresa</label>
+        <input type="text" id="empresa" placeholder="Nome da empresa">
       </div>
-
-      <div class="q-card" id="card-q2">
-        <div class="q-top"><span class="q-number">Q2</span><span class="q-text">Em uma reunião de equipe, qual papel você costuma assumir naturalmente?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q2" value="D"><span class="opt-letter">A</span>Quem conduz, propõe e pressiona por resultados</label>
-          <label class="opt-label"><input type="radio" name="q2" value="I"><span class="opt-letter">B</span>Quem anima, engaja e traz energia para o grupo</label>
-          <label class="opt-label"><input type="radio" name="q2" value="S"><span class="opt-letter">C</span>Quem escuta, apoia e garante harmonia</label>
-          <label class="opt-label"><input type="radio" name="q2" value="C"><span class="opt-letter">D</span>Quem questiona, organiza e exige precisão</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
+      <div class="fld">
+        <label>Segmento</label>
+        <input type="text" id="segmento" placeholder="Ex: Varejo, Serviços, Indústria">
       </div>
-
-      <div class="q-card" id="card-q3">
-        <div class="q-top"><span class="q-number">Q3</span><span class="q-text">Como você reage quando algo não sai como planejado?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q3" value="D"><span class="opt-letter">A</span>Fico irritado(a), quero resolver na hora</label>
-          <label class="opt-label"><input type="radio" name="q3" value="I"><span class="opt-letter">B</span>Falo sobre isso, processo com outras pessoas</label>
-          <label class="opt-label"><input type="radio" name="q3" value="S"><span class="opt-letter">C</span>Fico abalado(a), levo um tempo para me reorganizar</label>
-          <label class="opt-label"><input type="radio" name="q3" value="C"><span class="opt-letter">D</span>Analiso o que deu errado antes de agir</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
+      <div class="fld col-full">
+        <label>E-mail <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
       </div>
-
-      <div class="q-card" id="card-q4">
-        <div class="q-top"><span class="q-number">Q4</span><span class="q-text">Como as pessoas ao seu redor costumam te descrever?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q4" value="D"><span class="opt-letter">A</span>Direto(a), assertivo(a), vai a fundo</label>
-          <label class="opt-label"><input type="radio" name="q4" value="I"><span class="opt-letter">B</span>Comunicativo(a), animado(a), inspirador(a)</label>
-          <label class="opt-label"><input type="radio" name="q4" value="S"><span class="opt-letter">C</span>Calmo(a), confiável, prestativo(a)</label>
-          <label class="opt-label"><input type="radio" name="q4" value="C"><span class="opt-letter">D</span>Criterioso(a), organizado(a), preciso(a)</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q5">
-        <div class="q-top"><span class="q-number">Q5</span><span class="q-text">Diante de uma mudança inesperada no trabalho, você tende a…</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q5" value="D"><span class="opt-letter">A</span>Encarar como uma oportunidade de liderar</label>
-          <label class="opt-label"><input type="radio" name="q5" value="I"><span class="opt-letter">B</span>Ver o lado positivo e engajar as pessoas</label>
-          <label class="opt-label"><input type="radio" name="q5" value="S"><span class="opt-letter">C</span>Resistir um pouco e precisar de tempo para adaptar</label>
-          <label class="opt-label"><input type="radio" name="q5" value="C"><span class="opt-letter">D</span>Querer entender bem o motivo antes de aceitar</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q6">
-        <div class="q-top"><span class="q-number">Q6</span><span class="q-text">O que mais te incomoda no trabalho em equipe?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q6" value="D"><span class="opt-letter">A</span>Lentidão, falta de decisão, pessoas que enrolam</label>
-          <label class="opt-label"><input type="radio" name="q6" value="I"><span class="opt-letter">B</span>Falta de conexão, ambiente frio e sem entusiasmo</label>
-          <label class="opt-label"><input type="radio" name="q6" value="S"><span class="opt-letter">C</span>Conflito, pressão excessiva e falta de consideração</label>
-          <label class="opt-label"><input type="radio" name="q6" value="C"><span class="opt-letter">D</span>Desorganização, improvisação e falta de padrão</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q7">
-        <div class="q-top"><span class="q-number">Q7</span><span class="q-text">Quando você precisa convencer alguém, você tende a…</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q7" value="D"><span class="opt-letter">A</span>Ser direto(a), falar dos resultados e das consequências</label>
-          <label class="opt-label"><input type="radio" name="q7" value="I"><span class="opt-letter">B</span>Contar histórias, criar entusiasmo e usar emoção</label>
-          <label class="opt-label"><input type="radio" name="q7" value="S"><span class="opt-letter">C</span>Construir confiança gradualmente, ser gentil e paciente</label>
-          <label class="opt-label"><input type="radio" name="q7" value="C"><span class="opt-letter">D</span>Apresentar fatos, dados e argumentos lógicos</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q8">
-        <div class="q-top"><span class="q-number">Q8</span><span class="q-text">Qual dessas frases mais combina com você?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q8" value="D"><span class="opt-letter">A</span>"Feito é melhor que perfeito."</label>
-          <label class="opt-label"><input type="radio" name="q8" value="I"><span class="opt-letter">B</span>"A vida é melhor quando você está rindo."</label>
-          <label class="opt-label"><input type="radio" name="q8" value="S"><span class="opt-letter">C</span>"Devagar e sempre, na base da confiança."</label>
-          <label class="opt-label"><input type="radio" name="q8" value="C"><span class="opt-letter">D</span>"Se vale a pena fazer, vale a pena fazer direito."</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-    </div>
-
-    <!-- BLOCO 2: SABOTADORES (Q9–Q16) -->
-    <div class="bloco">
-      <div class="bloco-header">
-        <span class="bloco-badge badge-sab">Sabotadores</span>
-        <span class="bloco-title">Padrões mentais limitantes</span>
-        <span class="bloco-range">Q9 – Q16</span>
-      </div>
-
-      <div class="q-card" id="card-q9">
-        <div class="q-top"><span class="q-number">Q9</span><span class="q-text">Com que frequência você deixa de agir por medo de errar ou de não ser bom(boa) o suficiente?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nunca</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q9" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q9" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q9" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q9" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q9" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Sempre</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q10">
-        <div class="q-top"><span class="q-number">Q10</span><span class="q-text">Com que frequência você se sente responsável pelo bem-estar e felicidade das pessoas ao seu redor, mesmo quando isso te sobrecarrega?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nunca</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q10" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q10" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q10" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q10" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q10" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Sempre</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q11">
-        <div class="q-top"><span class="q-number">Q11</span><span class="q-text">Com que frequência você procrastina ou evita tarefas difíceis, preferindo algo mais fácil ou prazeroso?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nunca</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q11" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q11" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q11" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q11" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q11" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Sempre</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q12">
-        <div class="q-top"><span class="q-number">Q12</span><span class="q-text">Com que frequência você sente que precisa estar no controle para que tudo saia como deveria?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nunca</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q12" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q12" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q12" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q12" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q12" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Sempre</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q13">
-        <div class="q-top"><span class="q-number">Q13</span><span class="q-text">Quando você falha ou comete um erro, o que costuma acontecer internamente?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q13" value="Critico_interno"><span class="opt-letter">A</span>Me cobro demais, fico ruminando por um bom tempo</label>
-          <label class="opt-label"><input type="radio" name="q13" value="Prestativo"><span class="opt-letter">B</span>Sinto que decepcionei alguém importante</label>
-          <label class="opt-label"><input type="radio" name="q13" value="Fugitivo"><span class="opt-letter">C</span>Tento rapidamente culpar algo externo ou justificar</label>
-          <label class="opt-label"><input type="radio" name="q13" value="Nenhum"><span class="opt-letter">D</span>Analiso friamente o que deu errado e sigo em frente</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q14">
-        <div class="q-top"><span class="q-number">Q14</span><span class="q-text">Quando você está sob pressão, qual comportamento aparece mais?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q14" value="Controlador"><span class="opt-letter">A</span>Fico irritado(a), impaciente e quero resultados imediatos</label>
-          <label class="opt-label"><input type="radio" name="q14" value="Aprovacao"><span class="opt-letter">B</span>Fico ansioso(a) e começo a buscar aprovação dos outros</label>
-          <label class="opt-label"><input type="radio" name="q14" value="Fugitivo"><span class="opt-letter">C</span>Me isolo, evito conflito e fico paralisado(a)</label>
-          <label class="opt-label"><input type="radio" name="q14" value="Hipervigilante"><span class="opt-letter">D</span>Entro em modo hiperanalítico e fico preso(a) em detalhes</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q15">
-        <div class="q-top"><span class="q-number">Q15</span><span class="q-text">O quanto a opinião dos outros influencia suas decisões — mesmo quando você já sabe o que quer fazer?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nada</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q15" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q15" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q15" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q15" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q15" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Muito</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q16">
-        <div class="q-top"><span class="q-number">Q16</span><span class="q-text">Você começa muitos projetos mas tem dificuldade de concluir? Ou é o oposto?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q16" value="Inquieto"><span class="opt-letter">A</span>Começo muito, concluo pouco — fico disperso(a)</label>
-          <label class="opt-label"><input type="radio" name="q16" value="Equilibrado"><span class="opt-letter">B</span>Tenho equilíbrio razoável entre iniciar e concluir</label>
-          <label class="opt-label"><input type="radio" name="q16" value="Rigido"><span class="opt-letter">C</span>Prefiro concluir tudo antes de começar algo novo</label>
-          <label class="opt-label"><input type="radio" name="q16" value="Hiperrealizador"><span class="opt-letter">D</span>Tenho dificuldade de começar — fico preparando demais</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-    </div>
-
-    <!-- BLOCO 3: COMUNICAÇÃO (Q17–Q21) -->
-    <div class="bloco">
-      <div class="bloco-header">
-        <span class="bloco-badge badge-com">Comunicação</span>
-        <span class="bloco-title">Estilo de comunicação</span>
-        <span class="bloco-range">Q17 – Q21</span>
-      </div>
-
-      <div class="q-card" id="card-q17">
-        <div class="q-top"><span class="q-number">Q17</span><span class="q-text">Como você prefere receber um feedback difícil?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q17" value="Direto"><span class="opt-letter">A</span>Direto ao ponto, sem rodeios — prefiro saber logo</label>
-          <label class="opt-label"><input type="radio" name="q17" value="Empatico"><span class="opt-letter">B</span>Com empatia e sensibilidade, numa conversa de confiança</label>
-          <label class="opt-label"><input type="radio" name="q17" value="Dados"><span class="opt-letter">C</span>Com dados e exemplos concretos, de forma estruturada</label>
-          <label class="opt-label"><input type="radio" name="q17" value="Privado"><span class="opt-letter">D</span>Em particular, sem exposição, com tempo para processar</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q18">
-        <div class="q-top"><span class="q-number">Q18</span><span class="q-text">Em uma comunicação importante, você prefere…</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q18" value="Reuniao"><span class="opt-letter">A</span>Falar ao vivo — reunião ou ligação</label>
-          <label class="opt-label"><input type="radio" name="q18" value="Audio_video"><span class="opt-letter">B</span>Mensagem de voz ou vídeo</label>
-          <label class="opt-label"><input type="radio" name="q18" value="Escrito"><span class="opt-letter">C</span>Texto escrito (mensagem ou e-mail)</label>
-          <label class="opt-label"><input type="radio" name="q18" value="Depende"><span class="opt-letter">D</span>Depende muito do assunto e da pessoa</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q19">
-        <div class="q-top"><span class="q-number">Q19</span><span class="q-text">O quanto você se incomoda quando há silêncio ou distância de pessoas importantes para você?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Nada</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q19" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q19" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q19" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q19" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q19" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Muito</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q20">
-        <div class="q-top"><span class="q-number">Q20</span><span class="q-text">Quando você discorda de alguém, o que costuma fazer?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q20" value="Assertivo"><span class="opt-letter">A</span>Falo diretamente o que penso, mesmo gerando desconforto</label>
-          <label class="opt-label"><input type="radio" name="q20" value="Conciliador"><span class="opt-letter">B</span>Tento encontrar um meio-termo e não criar conflito</label>
-          <label class="opt-label"><input type="radio" name="q20" value="Evita"><span class="opt-letter">C</span>Guardo para mim, evito o embate</label>
-          <label class="opt-label"><input type="radio" name="q20" value="Embasado"><span class="opt-letter">D</span>Busco embasamento antes de opinar</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q21">
-        <div class="q-top"><span class="q-number">Q21</span><span class="q-text">O que mais te motiva a compartilhar algo com alguém?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q21" value="Resolver"><span class="opt-letter">A</span>Resolver um problema ou tomar uma decisão juntos</label>
-          <label class="opt-label"><input type="radio" name="q21" value="Conexao"><span class="opt-letter">B</span>Conexão emocional — quero que a pessoa saiba como me sinto</label>
-          <label class="opt-label"><input type="radio" name="q21" value="Apoio"><span class="opt-letter">C</span>Precisar de apoio ou conselho</label>
-          <label class="opt-label"><input type="radio" name="q21" value="Precisao"><span class="opt-letter">D</span>Garantir que a informação seja precisa e bem compreendida</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-    </div>
-
-    <!-- BLOCO 4: MOTIVAÇÃO (Q22–Q25) -->
-    <div class="bloco">
-      <div class="bloco-header">
-        <span class="bloco-badge badge-mot">Motivação</span>
-        <span class="bloco-title">O que motiva e desmotiva</span>
-        <span class="bloco-range">Q22 – Q25</span>
-      </div>
-
-      <div class="q-card" id="card-q22">
-        <div class="q-top"><span class="q-number">Q22</span><span class="q-text">O que mais te energiza no trabalho?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q22" value="Desafios_conquistas"><span class="opt-letter">A</span>Desafios, metas ousadas e a sensação de conquistar</label>
-          <label class="opt-label"><input type="radio" name="q22" value="Conexao_reconhecimento"><span class="opt-letter">B</span>Conexão com pessoas, reconhecimento e entusiasmo</label>
-          <label class="opt-label"><input type="radio" name="q22" value="Estabilidade_relacionamentos"><span class="opt-letter">C</span>Estabilidade, rotina previsível e relacionamentos sólidos</label>
-          <label class="opt-label"><input type="radio" name="q22" value="Qualidade_aprendizado"><span class="opt-letter">D</span>Qualidade do trabalho, aprendizado e fazer bem feito</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q23">
-        <div class="q-top"><span class="q-number">Q23</span><span class="q-text">O que mais te drena energia ou te desmotiva?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q23" value="Microgeren_burocracia"><span class="opt-letter">A</span>Microgerenciamento, burocracia e falta de autonomia</label>
-          <label class="opt-label"><input type="radio" name="q23" value="Isolamento_ambiente_frio"><span class="opt-letter">B</span>Isolamento, falta de reconhecimento e ambiente frio</label>
-          <label class="opt-label"><input type="radio" name="q23" value="Mudancas_pressao"><span class="opt-letter">C</span>Mudanças constantes, pressão e falta de previsibilidade</label>
-          <label class="opt-label"><input type="radio" name="q23" value="Erros_improvisacao"><span class="opt-letter">D</span>Erros, improvisação e falta de padrão de qualidade</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q24">
-        <div class="q-top"><span class="q-number">Q24</span><span class="q-text">O quanto você consegue manter motivação mesmo sem reconhecimento externo?</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Preciso muito</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q24" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q24" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q24" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q24" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q24" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Sou autônomo(a)</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q25">
-        <div class="q-top"><span class="q-number">Q25</span><span class="q-text">Complete a frase: "Me sinto realizado(a) quando…"</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q25" value="Resultado_impossivel"><span class="opt-letter">A</span>Alcanço um resultado que parecia impossível</label>
-          <label class="opt-label"><input type="radio" name="q25" value="Impacto_pessoa"><span class="opt-letter">B</span>Impacto positivamente a vida de alguém</label>
-          <label class="opt-label"><input type="radio" name="q25" value="Equipe_bem"><span class="opt-letter">C</span>Sinto que as pessoas ao meu redor estão bem e confiam em mim</label>
-          <label class="opt-label"><input type="radio" name="q25" value="Qualidade_entrega"><span class="opt-letter">D</span>Entrego algo com qualidade que valeu o esforço</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-    </div>
-
-    <!-- BLOCO 5: LIDERANÇA E AUTOCONHECIMENTO (Q26–Q30) -->
-    <div class="bloco">
-      <div class="bloco-header">
-        <span class="bloco-badge badge-lid">Liderança</span>
-        <span class="bloco-title">Liderança e autoconhecimento</span>
-        <span class="bloco-range">Q26 – Q30</span>
-      </div>
-
-      <div class="q-card" id="card-q26">
-        <div class="q-top"><span class="q-number">Q26</span><span class="q-text">Como você age quando percebe que um colaborador ou parceiro não está entregando o esperado?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q26" value="Confronta_direto"><span class="opt-letter">A</span>Confronto diretamente e cobro resultado na hora</label>
-          <label class="opt-label"><input type="radio" name="q26" value="Conversa_entende"><span class="opt-letter">B</span>Converso para entender o que está acontecendo antes de cobrar</label>
-          <label class="opt-label"><input type="radio" name="q26" value="Espera_melhora"><span class="opt-letter">C</span>Espero um tempo para ver se melhora sozinho</label>
-          <label class="opt-label"><input type="radio" name="q26" value="Analisa_processo"><span class="opt-letter">D</span>Analiso se o problema é de processo antes de falar com a pessoa</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q27">
-        <div class="q-top"><span class="q-number">Q27</span><span class="q-text">Quando você pensa no seu maior obstáculo para crescer como líder, qual ressoa mais?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q27" value="Delegar"><span class="opt-letter">A</span>Dificuldade de delegar — sinto que faço melhor sozinho(a)</label>
-          <label class="opt-label"><input type="radio" name="q27" value="Consistencia"><span class="opt-letter">B</span>Falta de consistência — começo forte mas perco o ritmo</label>
-          <label class="opt-label"><input type="radio" name="q27" value="Conflito"><span class="opt-letter">C</span>Evitar conflito — prefiro harmonia a conversas difíceis</label>
-          <label class="opt-label"><input type="radio" name="q27" value="Perfeccionismo"><span class="opt-letter">D</span>Perfeccionismo — trava na execução por querer tudo certo</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q28">
-        <div class="q-top"><span class="q-number">Q28</span><span class="q-text">Em uma escala de 1 a 5, o quanto você consegue separar sua identidade do seu negócio ou cargo? (Ou seja: quando o negócio vai mal, você vai mal também?)</span></div>
-        <div class="scale-wrap"><div class="scale-row">
-          <span class="scale-end">Não consigo</span>
-          <div class="scale-btns">
-            <label class="scale-btn-label"><input type="radio" name="q28" value="1"><span class="scale-circle">1</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q28" value="2"><span class="scale-circle">2</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q28" value="3"><span class="scale-circle">3</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q28" value="4"><span class="scale-circle">4</span></label>
-            <label class="scale-btn-label"><input type="radio" name="q28" value="5"><span class="scale-circle">5</span></label>
-          </div>
-          <span class="scale-end right">Separo bem</span>
-        </div></div>
-        <div class="validation-msg">Por favor, selecione uma nota.</div>
-      </div>
-
-      <div class="q-card" id="card-q29">
-        <div class="q-top"><span class="q-number">Q29</span><span class="q-text">Qual dessas situações mais te tira do estado de equilíbrio e clareza mental?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q29" value="Incerteza"><span class="opt-letter">A</span>Incerteza — não saber o que vai acontecer me paralisa</label>
-          <label class="opt-label"><input type="radio" name="q29" value="Critica"><span class="opt-letter">B</span>Crítica ou julgamento — mesmo construtivo, me afeta</label>
-          <label class="opt-label"><input type="radio" name="q29" value="Sobrecarga"><span class="opt-letter">C</span>Sobrecarga — muita coisa ao mesmo tempo me desestabiliza</label>
-          <label class="opt-label"><input type="radio" name="q29" value="Injustica"><span class="opt-letter">D</span>Injustiça — quando vejo algo errado e não posso mudar</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-
-      <div class="q-card" id="card-q30">
-        <div class="q-top"><span class="q-number">Q30</span><span class="q-text">Se você pudesse mudar uma coisa em você como líder agora, qual seria?</span></div>
-        <div class="options-list">
-          <label class="opt-label"><input type="radio" name="q30" value="Mais_presenca"><span class="opt-letter">A</span>Ser mais presente e menos reativo(a) no dia a dia</label>
-          <label class="opt-label"><input type="radio" name="q30" value="Mais_estrategia"><span class="opt-letter">B</span>Pensar mais estrategicamente e menos operacionalmente</label>
-          <label class="opt-label"><input type="radio" name="q30" value="Mais_coragem"><span class="opt-letter">C</span>Ter mais coragem para tomar decisões difíceis</label>
-          <label class="opt-label"><input type="radio" name="q30" value="Mais_execucao"><span class="opt-letter">D</span>Executar mais e planejar menos</label>
-        </div>
-        <div class="validation-msg">Por favor, selecione uma opção.</div>
-      </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="submit-section">
-      <p class="submit-note">Ao enviar, Paulo Chequer receberá suas respostas e você verá<br>seu relatório de perfil gerado por inteligência artificial.</p>
-      <button type="submit" class="btn-submit" id="btn-submit">Gerar meu perfil</button>
-      <div class="error-msg" id="error-msg"></div>
-    </div>
-
-  </form>
-
-  <!-- SUCCESS + RELATÓRIO -->
-  <div id="success-screen">
-    <div class="success-top">
-      <div class="success-icon">✓</div>
-      <h2>Perfil gerado!</h2>
-      <p class="success-sub">Paulo já recebeu suas respostas. Abaixo está seu relatório personalizado.</p>
-    </div>
-
-    <div id="relatorio-box">
-      <h3>Seu relatório de perfil comportamental</h3>
-      <div id="relatorio-loading" class="loading-relatorio">
-        <div class="spinner"></div>
-        <span>Analisando suas respostas com inteligência artificial…</span>
-      </div>
-      <div id="relatorio-conteudo" style="display:none"></div>
-    </div>
-
-    <div class="pdf-actions">
-      <button class="btn-pdf" id="btn-pdf" disabled onclick="downloadPDF()">
-        ⬇ Baixar PDF
-      </button>
     </div>
   </div>
 
+  <!-- INSTRUÇÃO -->
+  <div class="instrucao">
+    <div class="instrucao-icon">!</div>
+    <p>Em cada grupo abaixo, selecione <strong>1 a 3 palavras que MAIS te representam</strong> e <strong>1 a 3 palavras que MENOS te representam</strong>. Responda com sinceridade — não existe resposta certa ou errada.</p>
+  </div>
+
+  <div class="legenda">
+    <div class="legenda-item"><div class="legenda-cor mais"></div> Mais me representa</div>
+    <div class="legenda-item"><div class="legenda-cor menos"></div> Menos me representa</div>
+  </div>
+
+  <!-- GRUPOS DE PALAVRAS -->
+  <div id="grupos-container"></div>
+
+  <div class="submit-area">
+    <p class="submit-note">Ao enviar, Paulo Chequer receberá seu perfil e você verá<br>seu relatório personalizado gerado por inteligência artificial.</p>
+    <button type="submit" class="btn-enviar" id="btn-enviar">Gerar meu perfil</button>
+    <div class="erro-msg" id="erro-msg"></div>
+  </div>
+
+</form>
+
+<!-- RESULTADO -->
+<div id="tela-resultado">
+  <div class="resultado-topo">
+    <div class="check-circle">✓</div>
+    <h2>Perfil gerado!</h2>
+    <p class="resultado-sub">Paulo já recebeu suas respostas. Aqui está seu relatório personalizado.</p>
+  </div>
+
+  <div id="relatorio-card">
+    <h3>Seu relatório de perfil comportamental</h3>
+    <div id="loading-rel" class="loading-box">
+      <div class="spin"></div>
+      <span>Analisando suas escolhas com inteligência artificial…</span>
+    </div>
+    <div id="relatorio-conteudo" style="display:none"></div>
+  </div>
+
+  <div class="acoes-pdf">
+    <button class="btn-pdf" id="btn-pdf" disabled onclick="window.print()">⬇ Baixar PDF</button>
+  </div>
+</div>
 </main>
 </div>
 
-
 <script>
-  const EMAILJS_PUBLIC_KEY  = 'a9-Dxx_YUDCftzJ41';
-  const EMAILJS_SERVICE_ID  = 'service_mzwe4wv';
-  const EMAILJS_TEMPLATE_ID = 'template_hprwuey';
-  const WORKER_URL = 'https://crescer360-proxy.chequerpaulo.workers.dev';
+// ── Credenciais ──────────────────────────────────────────
+const EMAILJS_PUBLIC_KEY  = 'a9-Dxx_YUDCftzJ41';
+const EMAILJS_SERVICE_ID  = 'service_mzwe4wv';
+const EMAILJS_TEMPLATE_ID = 'template_hprwuey';
+const WORKER_URL = 'https://crescer360-proxy.chequerpaulo.workers.dev';
 
-  emailjs.init(EMAILJS_PUBLIC_KEY);
+// SUBSTITUA pela URL do seu Google Apps Script após criar
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyk5KPWzj4PznHOTFR1jMsLtnSJD4wOpzc5eHWmARtj71pQH1GZe6OBl3IsvCAgl0mn/exec';
 
-  const totalQ = 30;
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
-  // ── Progress ─────────────────────────────────────────────
-  function updateProgress() {
-    let answered = 0;
-    for (let i = 1; i <= totalQ; i++) {
-      if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
-    }
-    const pct = Math.round((answered / totalQ) * 100);
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-label').textContent = answered + ' de ' + totalQ;
-    for (let i = 1; i <= totalQ; i++) {
-      const card = document.getElementById('card-q' + i);
-      if (card && document.querySelector(`input[name="q${i}"]:checked`)) {
-        card.classList.add('answered');
-        card.classList.remove('invalid');
-      }
-    }
+// ── Banco de palavras: 30 grupos, 6 palavras cada ────────
+// Cada palavra tem: texto, perfil DISC (D/I/S/C) e sabotador (opcional)
+const GRUPOS = [
+  { id:1,  palavras:[{t:'Determinado',d:'D'},{t:'Entusiasmado',d:'I'},{t:'Paciente',d:'S'},{t:'Preciso',d:'C'},{t:'Impulsivo',d:'D'},{t:'Disperso',d:'I'}] },
+  { id:2,  palavras:[{t:'Ousado',d:'D'},{t:'Sociável',d:'I'},{t:'Leal',d:'S'},{t:'Analítico',d:'C'},{t:'Controlador',d:'D'},{t:'Perfeccionista',d:'C'}] },
+  { id:3,  palavras:[{t:'Direto',d:'D'},{t:'Persuasivo',d:'I'},{t:'Gentil',d:'S'},{t:'Sistemático',d:'C'},{t:'Impaciente',d:'D'},{t:'Ansioso',d:'C'}] },
+  { id:4,  palavras:[{t:'Competitivo',d:'D'},{t:'Otimista',d:'I'},{t:'Estável',d:'S'},{t:'Criterioso',d:'C'},{t:'Dominador',d:'D'},{t:'Indeciso',d:'S'}] },
+  { id:5,  palavras:[{t:'Corajoso',d:'D'},{t:'Inspirador',d:'I'},{t:'Confiável',d:'S'},{t:'Organizado',d:'C'},{t:'Teimoso',d:'D'},{t:'Dependente',d:'S'}] },
+  { id:6,  palavras:[{t:'Assertivo',d:'D'},{t:'Animado',d:'I'},{t:'Cooperativo',d:'S'},{t:'Detalhista',d:'C'},{t:'Agressivo',d:'D'},{t:'Superficial',d:'I'}] },
+  { id:7,  palavras:[{t:'Focado',d:'D'},{t:'Criativo',d:'I'},{t:'Harmonioso',d:'S'},{t:'Cuidadoso',d:'C'},{t:'Inflexível',d:'D'},{t:'Evitador',d:'S'}] },
+  { id:8,  palavras:[{t:'Líder',d:'D'},{t:'Comunicativo',d:'I'},{t:'Prestativo',d:'S'},{t:'Metódico',d:'C'},{t:'Arrogante',d:'D'},{t:'Crítico',d:'C'}] },
+  { id:9,  palavras:[{t:'Resolutivo',d:'D'},{t:'Empático',d:'I'},{t:'Protetor',d:'S'},{t:'Minucioso',d:'C'},{t:'Reativo',d:'D'},{t:'Fechado',d:'C'}] },
+  { id:10, palavras:[{t:'Independente',d:'D'},{t:'Espontâneo',d:'I'},{t:'Dedicado',d:'S'},{t:'Rigoroso',d:'C'},{t:'Isolado',d:'C'},{t:'Negligente',d:'I'}] },
+  { id:11, palavras:[{t:'Ambicioso',d:'D'},{t:'Expressivo',d:'I'},{t:'Tolerante',d:'S'},{t:'Prudente',d:'C'},{t:'Egocêntrico',d:'D'},{t:'Passivo',d:'S'}] },
+  { id:12, palavras:[{t:'Objetivo',d:'D'},{t:'Entusiasta',d:'I'},{t:'Compreensivo',d:'S'},{t:'Exato',d:'C'},{t:'Frio',d:'C'},{t:'Incoerente',d:'I'}] },
+  { id:13, palavras:[{t:'Proativo',d:'D'},{t:'Motivador',d:'I'},{t:'Equilibrado',d:'S'},{t:'Lógico',d:'C'},{t:'Obsessivo',d:'C'},{t:'Instável',d:'I'}] },
+  { id:14, palavras:[{t:'Decisivo',d:'D'},{t:'Carismático',d:'I'},{t:'Sereno',d:'S'},{t:'Racional',d:'C'},{t:'Precipitado',d:'D'},{t:'Omisso',d:'S'}] },
+  { id:15, palavras:[{t:'Empreendedor',d:'D'},{t:'Popular',d:'I'},{t:'Solidário',d:'S'},{t:'Cauteloso',d:'C'},{t:'Autoritário',d:'D'},{t:'Medroso',d:'C'}] },
+  { id:16, palavras:[{t:'Eficiente',d:'D'},{t:'Divertido',d:'I'},{t:'Atencioso',d:'S'},{t:'Perfeccionista',d:'C'},{t:'Distante',d:'C'},{t:'Inconsequente',d:'I'}] },
+  { id:17, palavras:[{t:'Persistente',d:'D'},{t:'Aberto',d:'I'},{t:'Pacificador',d:'S'},{t:'Disciplinado',d:'C'},{t:'Turrão',d:'D'},{t:'Acomodado',d:'S'}] },
+  { id:18, palavras:[{t:'Corajoso',d:'D'},{t:'Acolhedor',d:'I'},{t:'Mediador',d:'S'},{t:'Cético',d:'C'},{t:'Irresponsável',d:'I'},{t:'Paralisado',d:'C'}] },
+  { id:19, palavras:[{t:'Pioneiro',d:'D'},{t:'Generoso',d:'I'},{t:'Paciente',d:'S'},{t:'Reservado',d:'C'},{t:'Imprudente',d:'D'},{t:'Rígido',d:'C'}] },
+  { id:20, palavras:[{t:'Confiante',d:'D'},{t:'Alegre',d:'I'},{t:'Humilde',d:'S'},{t:'Criterioso',d:'C'},{t:'Prepotente',d:'D'},{t:'Inseguro',d:'S'}] },
+  { id:21, palavras:[{t:'Estratégico',d:'D'},{t:'Intuitivo',d:'I'},{t:'Cuidadoso',d:'S'},{t:'Técnico',d:'C'},{t:'Calculista',d:'D'},{t:'Omisso',d:'S'}] },
+  { id:22, palavras:[{t:'Direto',d:'D'},{t:'Envolvente',d:'I'},{t:'Afetuoso',d:'S'},{t:'Criterioso',d:'C'},{t:'Brusco',d:'D'},{t:'Prolixo',d:'I'}] },
+  { id:23, palavras:[{t:'Executor',d:'D'},{t:'Influente',d:'I'},{t:'Apoiador',d:'S'},{t:'Analista',d:'C'},{t:'Impaciente',d:'D'},{t:'Procrastinador',d:'S'}] },
+  { id:24, palavras:[{t:'Forte',d:'D'},{t:'Engajador',d:'I'},{t:'Discreto',d:'S'},{t:'Exigente',d:'C'},{t:'Insensível',d:'D'},{t:'Vago',d:'I'}] },
+  { id:25, palavras:[{t:'Arrojado',d:'D'},{t:'Conectado',d:'I'},{t:'Firme',d:'S'},{t:'Perfeccionista',d:'C'},{t:'Temerário',d:'D'},{t:'Dependente',d:'S'}] },
+  { id:26, palavras:[{t:'Realizador',d:'D'},{t:'Vibrante',d:'I'},{t:'Seguro',d:'S'},{t:'Minucioso',d:'C'},{t:'Workholic',d:'D'},{t:'Distraído',d:'I'}] },
+  { id:27, palavras:[{t:'Incisivo',d:'D'},{t:'Espontâneo',d:'I'},{t:'Comprometido',d:'S'},{t:'Meticuloso',d:'C'},{t:'Explosivo',d:'D'},{t:'Evitador',d:'S'}] },
+  { id:28, palavras:[{t:'Audacioso',d:'D'},{t:'Otimista',d:'I'},{t:'Confiável',d:'S'},{t:'Sistemático',d:'C'},{t:'Teimoso',d:'D'},{t:'Conformado',d:'S'}] },
+  { id:29, palavras:[{t:'Objetivo',d:'D'},{t:'Inspirador',d:'I'},{t:'Resiliente',d:'S'},{t:'Lógico',d:'C'},{t:'Controlador',d:'D'},{t:'Crítico',d:'C'}] },
+  { id:30, palavras:[{t:'Destemido',d:'D'},{t:'Cativante',d:'I'},{t:'Tranquilo',d:'S'},{t:'Preciso',d:'C'},{t:'Autoritário',d:'D'},{t:'Ansioso',d:'C'}] },
+];
+
+// ── Render grupos ────────────────────────────────────────
+const container = document.getElementById('grupos-container');
+
+GRUPOS.forEach(g => {
+  const div = document.createElement('div');
+  div.className = 'grupo';
+  div.id = 'grupo-' + g.id;
+
+  div.innerHTML = `
+    <div class="grupo-top">
+      <span class="grupo-num">Grupo ${g.id}</span>
+      <span class="grupo-instrucao">Selecione as que <strong style="color:var(--accent)">mais</strong> e <strong style="color:var(--ink)">menos</strong> te representam</span>
+    </div>
+
+    <div class="sep-label">Mais me representa</div>
+    <div class="palavras-grid" id="mais-${g.id}">
+      ${g.palavras.map((p,i) => `
+        <div class="palavra-item tipo-mais">
+          <input type="checkbox" name="mais-${g.id}" id="mais-${g.id}-${i}" value="${p.t}|${p.d}">
+          <label class="palavra-label" for="mais-${g.id}-${i}">${p.t}</label>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="sep-label">Menos me representa</div>
+    <div class="palavras-grid" id="menos-${g.id}">
+      ${g.palavras.map((p,i) => `
+        <div class="palavra-item tipo-menos">
+          <input type="checkbox" name="menos-${g.id}" id="menos-${g.id}-${i}" value="${p.t}|${p.d}">
+          <label class="palavra-label" for="menos-${g.id}-${i}">${p.t}</label>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="validation-msg">Selecione ao menos 1 palavra em cada coluna.</div>
+  `;
+
+  container.appendChild(div);
+});
+
+// ── Limitar 3 seleções por seção ─────────────────────────
+document.addEventListener('change', e => {
+  const cb = e.target;
+  if (cb.type !== 'checkbox') return;
+
+  const [tipo, gid] = cb.name.split('-');
+  const todos = document.querySelectorAll(`input[name="${cb.name}"]`);
+  const marcados = [...todos].filter(c => c.checked);
+
+  if (marcados.length > 3) { cb.checked = false; return; }
+
+  updateProgress();
+  markComplete(gid);
+});
+
+function markComplete(gid) {
+  const temMais  = document.querySelector(`input[name="mais-${gid}"]:checked`);
+  const temMenos = document.querySelector(`input[name="menos-${gid}"]:checked`);
+  const card = document.getElementById('grupo-' + gid);
+  if (temMais && temMenos) {
+    card.classList.add('completo');
+    card.classList.remove('invalido');
+  } else {
+    card.classList.remove('completo');
   }
+}
 
-  document.getElementById('form').addEventListener('change', updateProgress);
+function updateProgress() {
+  let completos = 0;
+  GRUPOS.forEach(g => {
+    const m = document.querySelector(`input[name="mais-${g.id}"]:checked`);
+    const n = document.querySelector(`input[name="menos-${g.id}"]:checked`);
+    if (m && n) completos++;
+  });
+  const pct = Math.round((completos / GRUPOS.length) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = completos + ' de ' + GRUPOS.length;
+}
 
-  // ── Validation ───────────────────────────────────────────
-  function validate() {
-    let valid = true;
-    const nome = document.getElementById('nome').value.trim();
-    const email = document.getElementById('email_mentorado').value.trim();
-    if (!nome) { document.getElementById('nome').style.borderColor = '#e05050'; valid = false; }
-    if (!email || !email.includes('@')) { document.getElementById('email_mentorado').style.borderColor = '#e05050'; valid = false; }
-    for (let i = 1; i <= totalQ; i++) {
-      const card = document.getElementById('card-q' + i);
-      if (!document.querySelector(`input[name="q${i}"]:checked`)) {
-        card.classList.add('invalid'); valid = false;
-      } else {
-        card.classList.remove('invalid');
-      }
-    }
-    return valid;
-  }
+// ── Coletar respostas ────────────────────────────────────
+function coletarRespostas() {
+  const disc = { D: { mais:0, menos:0 }, I: { mais:0, menos:0 }, S: { mais:0, menos:0 }, C: { mais:0, menos:0 } };
+  const maisPalavras = [], menosPalavras = [];
+  const detalhes = [];
 
-  // ── Collect ──────────────────────────────────────────────
-  function collectAnswers() {
-    const data = {
-      nome: document.getElementById('nome').value.trim(),
-      cargo: document.getElementById('cargo').value.trim(),
-      empresa: document.getElementById('empresa').value.trim(),
-      segmento: document.getElementById('segmento').value.trim(),
-      email_mentorado: document.getElementById('email_mentorado').value.trim(),
-    };
+  GRUPOS.forEach(g => {
+    const mais  = [...document.querySelectorAll(`input[name="mais-${g.id}"]:checked`)].map(c => c.value);
+    const menos = [...document.querySelectorAll(`input[name="menos-${g.id}"]:checked`)].map(c => c.value);
 
-    const discMap = { D: 0, I: 0, S: 0, C: 0 };
-    [1,2,3,4,5,6,7,8].forEach(n => {
-      const val = document.querySelector(`input[name="q${n}"]:checked`)?.value;
-      if (val && discMap[val] !== undefined) discMap[val]++;
-      data[`q${n}`] = val || '-';
+    mais.forEach(v => {
+      const [t, d] = v.split('|');
+      maisPalavras.push(t);
+      if (disc[d]) disc[d].mais++;
     });
 
-    const sorted = Object.entries(discMap).sort((a,b) => b[1]-a[1]);
-    data.disc_dominant  = sorted[0][0];
-    data.disc_secondary = sorted[1][0];
-    data.disc_scores    = `D=${discMap.D} | I=${discMap.I} | S=${discMap.S} | C=${discMap.C}`;
+    menos.forEach(v => {
+      const [t, d] = v.split('|');
+      menosPalavras.push(t);
+      if (disc[d]) disc[d].menos++;
+    });
 
-    for (let i = 9; i <= totalQ; i++) {
-      data[`q${i}`] = document.querySelector(`input[name="q${i}"]:checked`)?.value || '-';
-    }
+    detalhes.push(`G${g.id} + [${mais.map(v=>v.split('|')[0]).join(', ')}] - [${menos.map(v=>v.split('|')[0]).join(', ')}]`);
+  });
 
-    data.resumo_disc = `
-BLOCO 1 — DISC
-Pontuação: ${data.disc_scores}
-Perfil dominante: ${data.disc_dominant} | Secundário: ${data.disc_secondary}
-Q1:${data.q1} Q2:${data.q2} Q3:${data.q3} Q4:${data.q4} Q5:${data.q5} Q6:${data.q6} Q7:${data.q7} Q8:${data.q8}
+  // Score DISC: mais - menos (quanto mais positivo, mais dominante)
+  const scores = {};
+  ['D','I','S','C'].forEach(k => { scores[k] = disc[k].mais - disc[k].menos; });
 
-BLOCO 2 — SABOTADORES
-Q9  (medo de errar): ${data.q9}/5
-Q10 (sobrecarga por outros): ${data.q10}/5
-Q11 (procrastinação): ${data.q11}/5
-Q12 (necessidade de controle): ${data.q12}/5
-Q13 (reação ao erro): ${data.q13}
-Q14 (comportamento sob pressão): ${data.q14}
-Q15 (influência da opinião alheia): ${data.q15}/5
-Q16 (iniciar vs concluir): ${data.q16}
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
 
-BLOCO 3 — COMUNICAÇÃO
-Q17 (receber feedback): ${data.q17}
-Q18 (canal preferido): ${data.q18}
-Q19 (sensibilidade ao silêncio): ${data.q19}/5
-Q20 (ao discordar): ${data.q20}
-Q21 (motivo de compartilhar): ${data.q21}
+  return {
+    nome: document.getElementById('nome').value.trim(),
+    cargo: document.getElementById('cargo').value.trim(),
+    empresa: document.getElementById('empresa').value.trim(),
+    segmento: document.getElementById('segmento').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    disc_dominant:  sorted[0][0],
+    disc_secondary: sorted[1][0],
+    disc_scores: `D=${scores.D} | I=${scores.I} | S=${scores.S} | C=${scores.C}`,
+    mais_palavras: maisPalavras.join(', '),
+    menos_palavras: menosPalavras.join(', '),
+    detalhes: detalhes.join('\n'),
+    scores,
+    timestamp: new Date().toLocaleString('pt-BR'),
+  };
+}
 
-BLOCO 4 — MOTIVAÇÃO
-Q22 (o que energiza): ${data.q22}
-Q23 (o que drena): ${data.q23}
-Q24 (motivação interna): ${data.q24}/5
-Q25 (realização): ${data.q25}
+// ── Validação ────────────────────────────────────────────
+function validar() {
+  let ok = true;
+  const nome  = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
 
-BLOCO 5 — LIDERANÇA
-Q26 (ao cobrar resultado): ${data.q26}
-Q27 (maior obstáculo como líder): ${data.q27}
-Q28 (separar identidade do negócio): ${data.q28}/5
-Q29 (o que tira o equilíbrio): ${data.q29}
-Q30 (o que mudaria em si): ${data.q30}
-    `.trim();
+  if (!nome)  { document.getElementById('nome').style.borderColor  = '#d04040'; ok = false; }
+  if (!email || !email.includes('@')) { document.getElementById('email').style.borderColor = '#d04040'; ok = false; }
 
-    return data;
-  }
+  GRUPOS.forEach(g => {
+    const m = document.querySelector(`input[name="mais-${g.id}"]:checked`);
+    const n = document.querySelector(`input[name="menos-${g.id}"]:checked`);
+    const card = document.getElementById('grupo-' + g.id);
+    if (!m || !n) { card.classList.add('invalido'); ok = false; }
+    else card.classList.remove('invalido');
+  });
 
+  return ok;
+}
 
-  // ── Markdown simples → HTML ─────────────────────────────
-  function markdownToHtml(text) {
-    let html = text
-      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-      .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>');
+// ── Markdown → HTML ──────────────────────────────────────
+function md2html(text) {
+  let h = text
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,   '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^[-•] (.+)$/gm, '<li>$1</li>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
 
-    // listas
-    html = html.replace(/^[-•] (.+)$/gm, '<li>$1</li>');
-    html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
-    html = html.replace(/(<li>[^]*?<\/li>\n?)+/g, m => '<ul>' + m + '</ul>');
+  h = h.replace(/(<li>[^]*?<\/li>\n?)+/g, m => '<ul>' + m + '</ul>');
 
-    // parágrafos
-    const lines = html.split('\n');
-    const out = [];
-    for (const line of lines) {
-      const t = line.trim();
-      if (!t) { out.push(''); continue; }
-      if (/^<(h[23]|ul|li|\/ul)/.test(t)) { out.push(t); continue; }
-      out.push('<p>' + t + '</p>');
-    }
-    return out.join('\n');
-  }
+  return h.split('\n').map(l => {
+    const t = l.trim();
+    if (!t) return '';
+    if (/^<(h[23]|ul|\/ul|li)/.test(t)) return t;
+    return '<p>' + t + '</p>';
+  }).join('\n');
+}
 
-  // ── Gerar dois relatórios em paralelo ────────────────────
-  async function gerarRelatorios(data) {
-    const ctx = `DADOS:\nNome: ${data.nome}\nCargo: ${data.cargo||'N/I'}\nEmpresa: ${data.empresa||'N/I'}\nSegmento: ${data.segmento||'N/I'}\n\n${data.resumo_disc}`;
+// ── Gerar relatórios ─────────────────────────────────────
+async function gerarRelatorios(d) {
+  const ctx = `Nome: ${d.nome} | Cargo: ${d.cargo||'N/I'} | Empresa: ${d.empresa||'N/I'} | Segmento: ${d.segmento||'N/I'}
+Perfil DISC: Dominante ${d.disc_dominant} | Secundário ${d.disc_secondary} | Scores: ${d.disc_scores}
+Palavras que MAIS representam: ${d.mais_palavras}
+Palavras que MENOS representam: ${d.menos_palavras}`;
 
-    const pMentorado = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
-Gere um relatório de perfil comportamental para o próprio mentorado ler.
-Tom: direto, humano, sem jargão de RH. Use o nome ${data.nome}. Use markdown (## títulos, **negrito**).
-NÃO inclua instruções para o mentor nem seções sobre como conduzir sessões.
-
-${ctx}
-
-## 1. Seu perfil DISC
-Perfil dominante e secundário de ${data.nome} na prática. Pontos fortes e pontos cegos reais.
-
-## 2. Seus sabotadores mentais
-Os 2 ou 3 mais ativos. Dê nome direto ao padrão. Como cada um aparece na vida de ${data.nome}.
-
-## 3. Seu estilo de comunicação
-Como ${data.nome} prefere receber e transmitir informações. O que pode gerar atrito com outros.
-
-## 4. O que te move — e o que te trava
-O que energiza ${data.nome} e o que drena. Como isso impacta a performance.
-
-## 5. Sua liderança hoje
-Como ${data.nome} exerce liderança. Padrão identificado. Principal bloqueio.
-
-## 6. Seus pontos cegos
-O que ${data.nome} provavelmente ainda não enxerga. Maior potencial inexplorado.
-
-Seja específico e direto. Sem mencionar Paulo nem a mentoria.`;
-
-    const pMentor = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
-Gere um relatório EXCLUSIVO PARA O MENTOR sobre ${data.nome}. Este texto NÃO será visto pelo mentorado.
-Use markdown (## títulos, **negrito**).
+  const pMentorado = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
+Com base nas palavras que ${d.nome} escolheu para se descrever (mais e menos), gere um relatório de perfil comportamental para o próprio mentorado ler.
+Tom: direto, humano, revelador. Use o nome ${d.nome}. Use markdown (## títulos, **negrito**).
+NÃO inclua instruções para o mentor. NÃO mencione Paulo.
 
 ${ctx}
 
-## Leitura estratégica do perfil
-O que Paulo precisa saber antes da 1ª sessão. O que as respostas revelam além do óbvio.
+## 1. Seu perfil comportamental
+Qual perfil DISC dominante de ${d.nome} e o que isso significa na prática. O que as palavras escolhidas revelam sobre como age, decide e se relaciona.
 
-## Como conduzir as sessões com ${data.nome}
-Instruções práticas: abordagem, ritmo, tom, o que funciona e o que vai travar esse perfil.
+## 2. Seus padrões limitantes
+Quais sabotadores mentais as palavras "menos me representa" sugerem. Como esses padrões se manifestam no dia a dia de ${d.nome}.
 
-## Paradoxos e pontos cegos críticos
-Conflitos internos que ${data.nome} carrega e provavelmente não percebe. O que confrontar com cuidado.
+## 3. Como você se comunica
+O que as escolhas revelam sobre o estilo de comunicação de ${d.nome}. O que gera conexão e o que gera atrito.
 
-## Como usar a motivação a favor do processo
-Gatilhos específicos para engajar ${data.nome} de verdade na mentoria.
+## 4. O que te move
+O que energiza ${d.nome} com base nas palavras positivas escolhidas. O que drena com base nas negativas.
 
-## Recomendações para as primeiras sessões
-3 a 5 direcionamentos práticos. Qual pilar do Crescer 360° focar primeiro e por quê.`;
+## 5. Seus pontos cegos
+O que as escolhas de ${d.nome} revelam sobre o que ainda não está sendo visto. Maior potencial inexplorado.`;
 
-    const [r1, r2] = await Promise.all([
-      fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:3000, messages:[{role:'user',content:pMentorado}] }) }),
-      fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:2000, messages:[{role:'user',content:pMentor}] }) })
-    ]);
+  const pMentor = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
+Este relatório é EXCLUSIVO PARA O MENTOR. O mentorado NÃO verá isso.
+Use markdown. Seja estratégico e direto.
 
-    if (!r1.ok) throw new Error('Worker mentorado: ' + r1.status);
-    if (!r2.ok) throw new Error('Worker mentor: ' + r2.status);
+${ctx}
 
-    const j1 = await r1.json();
-    const j2 = await r2.json();
-    return { mentorado: j1.content[0].text, mentor: j2.content[0].text };
+## Leitura estratégica
+O que as palavras revelam além do óbvio. O que ${d.nome} escolheu inconscientemente.
+
+## Como conduzir as sessões
+Tom, abordagem, ritmo certo para esse perfil. O que funciona e o que trava.
+
+## Paradoxos e tensões internas
+Contradições entre as palavras mais e menos. O que confrontar com cuidado.
+
+## Como engajar ${d.nome} na mentoria
+Gatilhos específicos de comprometimento baseados no perfil.
+
+## Pilar prioritário do Crescer 360°
+Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar primeiro e por quê.`;
+
+  const [r1, r2] = await Promise.all([
+    fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:3000, messages:[{role:'user',content:pMentorado}] }) }),
+    fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-opus-4-5', max_tokens:2000, messages:[{role:'user',content:pMentor}] }) })
+  ]);
+
+  if (!r1.ok || !r2.ok) throw new Error('Erro no servidor');
+
+  const j1 = await r1.json();
+  const j2 = await r2.json();
+  return { mentorado: j1.content[0].text, mentor: j2.content[0].text };
+}
+
+// ── Salvar no Google Sheets ──────────────────────────────
+async function salvarNoSheets(d, relMentorado) {
+  if (SHEETS_URL === 'COLE_AQUI_A_URL_DO_APPS_SCRIPT') return;
+  try {
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        timestamp:      d.timestamp,
+        nome:           d.nome,
+        cargo:          d.cargo,
+        empresa:        d.empresa,
+        segmento:       d.segmento,
+        email:          d.email,
+        disc_dominant:  d.disc_dominant,
+        disc_secondary: d.disc_secondary,
+        disc_scores:    d.disc_scores,
+        mais_palavras:  d.mais_palavras,
+        menos_palavras: d.menos_palavras,
+        relatorio:      relMentorado.substring(0, 2000),
+      })
+    });
+  } catch(e) { console.warn('Sheets error:', e); }
+}
+
+// ── Submit ───────────────────────────────────────────────
+document.getElementById('form-perfil').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  if (!validar()) {
+    const first = document.querySelector('.grupo.invalido, input[style*="d04040"]');
+    if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
   }
 
-    // ── Submit ───────────────────────────────────────────────
-  let relatorioMentoradoTexto = '';
-  let nomeParaPDF = '';
+  const btn = document.getElementById('btn-enviar');
+  btn.disabled = true;
+  btn.textContent = 'Analisando…';
 
-  document.getElementById('form').addEventListener('submit', async function(e) {
-    e.preventDefault();
+  const d = coletarRespostas();
 
-    if (!validate()) {
-      const firstInvalid = document.querySelector('.q-card.invalid');
-      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
+  try {
+    document.getElementById('form-perfil').style.display = 'none';
+    document.getElementById('tela-resultado').style.display = 'block';
+    window.scrollTo({ top:0, behavior:'smooth' });
 
-    const btn = document.getElementById('btn-submit');
-    btn.disabled = true;
-    btn.textContent = 'Analisando respostas…';
+    const { mentorado, mentor } = await gerarRelatorios(d);
 
-    const data = collectAnswers();
-    nomeParaPDF = data.nome;
+    document.getElementById('loading-rel').style.display = 'none';
+    const el = document.getElementById('relatorio-conteudo');
+    el.style.display = 'block';
+    el.innerHTML = md2html(mentorado);
+    document.getElementById('btn-pdf').disabled = false;
 
-    try {
-      // 1. Mostrar tela de sucesso com loading
-      document.getElementById('form').style.display = 'none';
-      document.getElementById('success-screen').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      // 2. Gerar os dois relatórios em paralelo
-      const { mentorado, mentor } = await gerarRelatorios(data);
-      relatorioMentoradoTexto = mentorado;
-
-      // 3. Renderizar relatório do mentorado com markdown
-      document.getElementById('relatorio-loading').style.display = 'none';
-      const conteudo = document.getElementById('relatorio-conteudo');
-      conteudo.style.display = 'block';
-      conteudo.innerHTML = markdownToHtml(mentorado);
-
-      // 4. Habilitar botão PDF
-      document.getElementById('btn-pdf').disabled = false;
-
-      // 5. Enviar e-mail com AMBOS os relatórios (sem bloquear a UI)
+    // E-mail e Sheets em paralelo
+    Promise.all([
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name: 'Paulo',
-        nome_mentorado: data.nome,
-        cargo: data.cargo || 'Não informado',
-        empresa: data.empresa || 'Não informada',
-        segmento: data.segmento || 'Não informado',
-        email_mentorado: data.email_mentorado,
-        disc_dominant: data.disc_dominant,
-        disc_secondary: data.disc_secondary,
-        disc_scores: data.disc_scores,
-        resumo_completo: data.resumo_disc,
+        to_name:           'Paulo',
+        nome_mentorado:    d.nome,
+        cargo:             d.cargo || 'N/I',
+        empresa:           d.empresa || 'N/I',
+        segmento:          d.segmento || 'N/I',
+        email_mentorado:   d.email,
+        disc_dominant:     d.disc_dominant,
+        disc_secondary:    d.disc_secondary,
+        disc_scores:       d.disc_scores,
+        resumo_completo:   `MAIS: ${d.mais_palavras}\nMENOS: ${d.menos_palavras}\n\n${d.detalhes}`,
         relatorio_mentorado: mentorado,
-        relatorio_mentor: mentor,
-      }).catch(err => console.error('EmailJS error:', err));
+        relatorio_mentor:  mentor,
+      }),
+      salvarNoSheets(d, mentorado)
+    ]).catch(err => console.error('Envio:', err));
 
-    } catch (err) {
-      console.error('Erro:', err);
-      document.getElementById('relatorio-loading').innerHTML =
-        '<span style="color:#a03030">Erro ao gerar relatório. Por favor, entre em contato com Paulo.</span>';
-    }
-  });
-
-  // ── Download PDF via print ────────────────────────────────
-  function downloadPDF() {
-    window.print();
+  } catch(err) {
+    console.error(err);
+    document.getElementById('loading-rel').innerHTML =
+      '<span style="color:#d04040">Erro ao gerar relatório. Entre em contato com Paulo.</span>';
   }
+});
 
-  // Reset border on typing
-  ['nome','email_mentorado'].forEach(id => {
-    document.getElementById(id).addEventListener('input', function() {
-      this.style.borderColor = '';
-    });
+['nome','email'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', function() {
+    this.style.borderColor = '';
   });
+});
 </script>
 </body>
 </html>
