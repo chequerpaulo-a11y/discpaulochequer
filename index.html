@@ -740,9 +740,9 @@ Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar pr
 
   const [r1, r2] = await Promise.all([
     fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-opus-4-5',max_tokens:5000,messages:[{role:'user',content:pMentorado}]})}),
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:5000,messages:[{role:'user',content:pMentorado}]})}),
     fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-opus-4-5',max_tokens:2000,messages:[{role:'user',content:pMentor}]})})
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2000,messages:[{role:'user',content:pMentor}]})})
   ]);
   if(!r1.ok||!r2.ok) throw new Error('Erro no servidor');
   const j1=await r1.json(); const j2=await r2.json();
