@@ -182,6 +182,44 @@ main{max-width:680px;margin:0 auto;padding:36px 20px 80px;}
   #relatorio-card{border:none!important;padding:0!important;}
   @page{margin:20mm;}
 }
+
+  /* TIPO DE RELATÓRIO */
+  .tipo-card{background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:12px;}
+  .tipo-titulo{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:16px;}
+  .tipo-opcoes{display:flex;flex-direction:column;gap:10px;}
+  .tipo-opcao{cursor:pointer;display:block;}
+  .tipo-opcao input[type="radio"]{display:none;}
+  .tipo-label{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);transition:all 0.15s;}
+  .tipo-opcao:hover .tipo-label{border-color:rgba(184,92,26,0.3);background:var(--accent-light);}
+  .tipo-opcao input:checked + .tipo-label{border-color:var(--accent);background:var(--accent-light);}
+  .tipo-icone{font-size:22px;flex-shrink:0;}
+  .tipo-nome{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+  .tipo-desc{font-size:12px;color:var(--ink-3);}
+  #tipo-validation{font-size:12px;color:#d04040;margin-top:10px;display:none;}
+  .tipo-card.invalido #tipo-validation{display:block;}
+  .tipo-card.invalido{border-color:#d04040;}
+
+  /* PILARES */
+  .pilares-card{background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:12px;}
+  .pilar{padding:4px 0;}
+  .pilar-divider{height:1px;background:var(--border);margin:16px 0;}
+  .pilar-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .pilar-icone{font-size:22px;flex-shrink:0;}
+  .pilar-nome{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+  .pilar-desc{font-size:12px;color:var(--ink-3);}
+  .pilar-nota{margin-left:auto;font-size:22px;font-weight:500;color:var(--accent);min-width:28px;text-align:center;}
+  .pilar-escala{display:flex;align-items:center;gap:10px;}
+  .pilar-extremo{font-size:11px;color:var(--ink-3);white-space:nowrap;}
+  .pilar-extremo.right{text-align:right;}
+  .pilar-btns{display:flex;gap:8px;flex:1;justify-content:center;}
+  .pilar-btn{cursor:pointer;}
+  .pilar-btn input[type="radio"]{display:none;}
+  .pilar-btn span{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--border);font-size:15px;font-weight:400;color:var(--ink-2);background:var(--cream);transition:all 0.12s;cursor:pointer;}
+  .pilar-btn:hover span{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+  .pilar-btn input:checked + span{background:var(--accent);border-color:var(--accent);color:white;font-weight:500;}
+  .pilar-btns{display:flex;gap:8px;justify-content:flex-start;margin-bottom:10px;}
+  .pilar-reflexao{min-height:36px;font-size:13px;line-height:1.6;color:var(--ink-2);background:var(--cream-2);border-radius:8px;padding:0;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s ease;border-left:3px solid transparent;}
+  .pilar-reflexao.ativo{max-height:80px;padding:10px 14px;border-left-color:var(--accent);}
 </style>
 </head>
 <body>
@@ -192,7 +230,7 @@ main{max-width:680px;margin:0 auto;padding:36px 20px 80px;}
   <h1>Quem você é<br><em>de verdade?</em></h1>
   <p>Duas partes rápidas: seu perfil comportamental e seus padrões mentais. Confie na primeira resposta.</p>
   <div class="chips-row">
-    <span class="chip">20 blocos</span>
+    <span class="chip">23 blocos</span>
     <span class="chip">8 minutos</span>
     <span class="chip">DISC + Sabotadores</span>
   </div>
@@ -201,7 +239,7 @@ main{max-width:680px;margin:0 auto;padding:36px 20px 80px;}
 <div class="prog-wrap">
   <div class="prog-inner">
     <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-    <div class="prog-label" id="prog-label">0 de 20</div>
+    <div class="prog-label" id="prog-label">0 de 23</div>
   </div>
 </div>
 
@@ -215,13 +253,170 @@ main{max-width:680px;margin:0 auto;padding:36px 20px 80px;}
       <div class="fld"><label>Nome completo <span class="req">*</span></label><input type="text" id="nome" placeholder="Seu nome" required></div>
       <div class="fld"><label>Cargo</label><input type="text" id="cargo" placeholder="Ex: Gerente, Dono"></div>
       <div class="fld"><label>Empresa</label><input type="text" id="empresa" placeholder="Nome da empresa"></div>
-      <div class="fld"><label>Segmento</label><input type="text" id="segmento" placeholder="Ex: Comércio, Serviços"></div>
+      <div class="fld"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="whatsapp" placeholder="(00) 00000-0000" required></div>
       <div class="fld col-full"><label>E-mail <span class="req">*</span></label><input type="email" id="email" placeholder="seu@email.com" required></div>
     </div>
   </div>
 
-  <!-- PARTE 1: DISC -->
+  <!-- TIPO DE RELATÓRIO -->
   <div class="secao-titulo">
+    <div class="secao-linha"></div>
+    <span class="secao-label disc">Contexto do relatório</span>
+    <div class="secao-linha"></div>
+  </div>
+
+  <div class="tipo-card">
+    <div class="tipo-titulo">Para qual área você quer o relatório?</div>
+    <div class="tipo-opcoes">
+      <label class="tipo-opcao" id="tipo-lideranca">
+        <input type="radio" name="tipo_relatorio" value="Liderança e Negócios">
+        <div class="tipo-label">
+          <div class="tipo-icone">🏢</div>
+          <div class="tipo-nome">Liderança e Negócios</div>
+          <div class="tipo-desc">Gestão de equipe, resultados, tomada de decisão</div>
+        </div>
+      </label>
+      <label class="tipo-opcao" id="tipo-pessoal">
+        <input type="radio" name="tipo_relatorio" value="Desenvolvimento Pessoal">
+        <div class="tipo-label">
+          <div class="tipo-icone">🌱</div>
+          <div class="tipo-nome">Desenvolvimento Pessoal</div>
+          <div class="tipo-desc">Autoconhecimento, relacionamentos, propósito</div>
+        </div>
+      </label>
+      <label class="tipo-opcao" id="tipo-carreira">
+        <input type="radio" name="tipo_relatorio" value="Desenvolvimento de Carreira">
+        <div class="tipo-label">
+          <div class="tipo-icone">🚀</div>
+          <div class="tipo-nome">Desenvolvimento de Carreira</div>
+          <div class="tipo-desc">Posicionamento, crescimento, próximos passos</div>
+        </div>
+      </label>
+    </div>
+    <div class="validation-msg" id="tipo-validation">Selecione o tipo de relatório.</div>
+  </div>
+
+  <!-- PILARES DA PERFORMANCE -->
+  <div class="secao-titulo" style="margin-top:32px;">
+    <div class="secao-linha"></div>
+    <span class="secao-label sab">Pilares da performance individual</span>
+    <div class="secao-linha"></div>
+  </div>
+
+  <div class="instrucao-card sab">
+    Para cada afirmação, escolha o quanto ela combina com você agora: <strong>Não sou assim</strong>, <strong>Às vezes</strong> ou <strong>Sou assim</strong>.
+  </div>
+
+  <!-- PILAR: TEMPO -->
+  <div class="grupo-sab" id="grupo-pilar-tempo">
+    <div class="sab-header">
+      <div class="sab-tag">Pilar 1 de 3</div>
+      <div class="sab-nome">⏱ Tempo</div>
+      <div class="sab-desc">Como você gerencia seu tempo e prioridades no dia a dia</div>
+    </div>
+    <div class="sab-afirmacoes">
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Vivo apagando incêndio — fico refém do urgente e raramente consigo trabalhar no que é importante.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-tempo-0" id="pilar-tempo-0-0" value="0"><label class="escala-label" for="pilar-tempo-0-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-0" id="pilar-tempo-0-1" value="1"><label class="escala-label" for="pilar-tempo-0-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-0" id="pilar-tempo-0-2" value="2"><label class="escala-label" for="pilar-tempo-0-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Tenho dificuldade em dizer não para demandas novas, mesmo quando minha agenda já está lotada.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-tempo-1" id="pilar-tempo-1-0" value="0"><label class="escala-label" for="pilar-tempo-1-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-1" id="pilar-tempo-1-1" value="1"><label class="escala-label" for="pilar-tempo-1-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-1" id="pilar-tempo-1-2" value="2"><label class="escala-label" for="pilar-tempo-1-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Termino a semana sensando que trabalhei muito, mas com a sensação de que o que importa não avançou.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-tempo-2" id="pilar-tempo-2-0" value="0"><label class="escala-label" for="pilar-tempo-2-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-2" id="pilar-tempo-2-1" value="1"><label class="escala-label" for="pilar-tempo-2-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-tempo-2" id="pilar-tempo-2-2" value="2"><label class="escala-label" for="pilar-tempo-2-2">Sou assim</label></div>
+        </div>
+      </div>
+    </div>
+    <div class="validation-msg">Responda todas as afirmações.</div>
+  </div>
+
+  <!-- PILAR: CONHECIMENTO -->
+  <div class="grupo-sab" id="grupo-pilar-conhecimento">
+    <div class="sab-header">
+      <div class="sab-tag">Pilar 2 de 3</div>
+      <div class="sab-nome">📚 Conhecimento</div>
+      <div class="sab-desc">Como você busca, absorve e aplica aprendizados</div>
+    </div>
+    <div class="sab-afirmacoes">
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Consumo muito conteúdo — podcasts, livros, cursos — mas tenho dificuldade de transformar isso em ação.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-0" id="pilar-conhecimento-0-0" value="0"><label class="escala-label" for="pilar-conhecimento-0-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-0" id="pilar-conhecimento-0-1" value="1"><label class="escala-label" for="pilar-conhecimento-0-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-0" id="pilar-conhecimento-0-2" value="2"><label class="escala-label" for="pilar-conhecimento-0-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Sinto que opero muito no automático — tomo decisões com base no que sempre fiz, sem buscar novas perspectivas.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-1" id="pilar-conhecimento-1-0" value="0"><label class="escala-label" for="pilar-conhecimento-1-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-1" id="pilar-conhecimento-1-1" value="1"><label class="escala-label" for="pilar-conhecimento-1-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-1" id="pilar-conhecimento-1-2" value="2"><label class="escala-label" for="pilar-conhecimento-1-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Não tenho uma rotina clara de aprendizado — estudo quando sobra tempo, e raramente sobra.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-2" id="pilar-conhecimento-2-0" value="0"><label class="escala-label" for="pilar-conhecimento-2-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-2" id="pilar-conhecimento-2-1" value="1"><label class="escala-label" for="pilar-conhecimento-2-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-conhecimento-2" id="pilar-conhecimento-2-2" value="2"><label class="escala-label" for="pilar-conhecimento-2-2">Sou assim</label></div>
+        </div>
+      </div>
+    </div>
+    <div class="validation-msg">Responda todas as afirmações.</div>
+  </div>
+
+  <!-- PILAR: ENERGIA -->
+  <div class="grupo-sab" id="grupo-pilar-energia">
+    <div class="sab-header">
+      <div class="sab-tag">Pilar 3 de 3</div>
+      <div class="sab-nome">⚡ Energia</div>
+      <div class="sab-desc">Como você cuida da sua energia física e mental</div>
+    </div>
+    <div class="sab-afirmacoes">
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Chego no final do dia esgotado — com pouca energia para família, lazer ou qualquer coisa além do trabalho.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-energia-0" id="pilar-energia-0-0" value="0"><label class="escala-label" for="pilar-energia-0-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-0" id="pilar-energia-0-1" value="1"><label class="escala-label" for="pilar-energia-0-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-0" id="pilar-energia-0-2" value="2"><label class="escala-label" for="pilar-energia-0-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Meus hábitos de sono, alimentação e movimento são irregulares — sei o que deveria fazer, mas não faço.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-energia-1" id="pilar-energia-1-0" value="0"><label class="escala-label" for="pilar-energia-1-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-1" id="pilar-energia-1-1" value="1"><label class="escala-label" for="pilar-energia-1-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-1" id="pilar-energia-1-2" value="2"><label class="escala-label" for="pilar-energia-1-2">Sou assim</label></div>
+        </div>
+      </div>
+      <div class="afirmacao">
+        <div class="afirmacao-texto">Sinto que minha produtividade varia muito dependendo do dia — tenho picos e quedas bruscas de energia sem entender o porquê.</div>
+        <div class="escala-opcoes">
+          <div class="escala-item"><input type="radio" name="pilar-energia-2" id="pilar-energia-2-0" value="0"><label class="escala-label" for="pilar-energia-2-0">Não sou assim</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-2" id="pilar-energia-2-1" value="1"><label class="escala-label" for="pilar-energia-2-1">Às vezes</label></div>
+          <div class="escala-item"><input type="radio" name="pilar-energia-2" id="pilar-energia-2-2" value="2"><label class="escala-label" for="pilar-energia-2-2">Sou assim</label></div>
+        </div>
+      </div>
+    </div>
+    <div class="validation-msg">Responda todas as afirmações.</div>
+  </div>
+
+  <!-- PARTE 1: DISC -->
+  <div class="secao-titulo" style="margin-top:40px;">
     <div class="secao-linha"></div>
     <span class="secao-label disc">Parte 1 — Perfil comportamental</span>
     <div class="secao-linha"></div>
@@ -556,6 +751,11 @@ function atualizarStatusSab(sabId) {
 
 function updateProgress() {
   let n = 0;
+  // Pilares
+  ['tempo','conhecimento','energia'].forEach(p => {
+    const todas = [0,1,2].every(i => document.querySelector(`input[name="pilar-${p}-${i}"]:checked`));
+    if (todas) n++;
+  });
   DISC_GRUPOS.forEach(g => {
     if (document.querySelector(`input[name="mais-${g.id}"]:checked`) &&
         document.querySelector(`input[name="menos-${g.id}"]:checked`)) n++;
@@ -566,8 +766,8 @@ function updateProgress() {
     );
     if (todas) n++;
   });
-  document.getElementById('prog-fill').style.width = Math.round(n/20*100)+'%';
-  document.getElementById('prog-label').textContent = n + ' de 20';
+  document.getElementById('prog-fill').style.width = Math.round(n/23*100)+'%';
+  document.getElementById('prog-label').textContent = n + ' de 23';
 }
 
 // ══════════════════════════════════════════════════════════
@@ -614,12 +814,32 @@ function coletar() {
     .sort((a,b) => sabScores[b.id] - sabScores[a.id])
     .map(g => `${g.nome} (${sabScores[g.id]}/6)`);
 
+  const tipoRelatorio = document.querySelector('input[name="tipo_relatorio"]:checked')?.value || '';
+
+  // Pilares: score 0-6 (soma das 3 afirmações)
+  const calcPilar = (nome) => {
+    let score = 0;
+    for (let i = 0; i < 3; i++) {
+      score += parseInt(document.querySelector(`input[name="pilar-${nome}-${i}"]:checked`)?.value || 0);
+    }
+    return score;
+  };
+  const pilarTempo        = calcPilar('tempo');
+  const pilarConhecimento = calcPilar('conhecimento');
+  const pilarEnergia      = calcPilar('energia');
+
+  const descPilar = (score) => score <= 1 ? 'Forte' : score <= 3 ? 'Atenção' : 'Crítico';
+
   return {
     nome:            document.getElementById('nome').value.trim(),
     cargo:           document.getElementById('cargo').value.trim(),
     empresa:         document.getElementById('empresa').value.trim(),
-    segmento:        document.getElementById('segmento').value.trim(),
+    whatsapp:        document.getElementById('whatsapp').value.trim(),
     email:           document.getElementById('email').value.trim(),
+    tipo_relatorio:  tipoRelatorio,
+    pilar_tempo:     pilarTempo + '/6 (' + descPilar(pilarTempo) + ')',
+    pilar_conhecimento: pilarConhecimento + '/6 (' + descPilar(pilarConhecimento) + ')',
+    pilar_energia:   pilarEnergia + '/6 (' + descPilar(pilarEnergia) + ')',
     disc_dominant:   sortedDisc[0][0],
     disc_secondary:  sortedDisc[1][0],
     disc_scores:     `D=${disc.D} | I=${disc.I} | S=${disc.S} | C=${disc.C}`,
@@ -640,8 +860,22 @@ function coletar() {
 function validar() {
   let ok = true;
   if (!document.getElementById('nome').value.trim()) { document.getElementById('nome').style.borderColor='#d04040'; ok=false; }
+  const wpp = document.getElementById('whatsapp').value.trim();
+  if (!wpp) { document.getElementById('whatsapp').style.borderColor='#d04040'; ok=false; }
   const em = document.getElementById('email').value.trim();
   if (!em||!em.includes('@')) { document.getElementById('email').style.borderColor='#d04040'; ok=false; }
+  // tipo relatório
+  if (!document.querySelector('input[name="tipo_relatorio"]:checked')) {
+    document.querySelector('.tipo-card').classList.add('invalido'); ok=false;
+  } else { document.querySelector('.tipo-card').classList.remove('invalido'); }
+
+  // Pilares
+  ['tempo','conhecimento','energia'].forEach(p => {
+    const card = document.getElementById('grupo-pilar-' + p);
+    const todas = [0,1,2].every(i => document.querySelector(`input[name="pilar-${p}-${i}"]:checked`));
+    if (!todas) { card.classList.add('invalido'); ok=false; }
+    else card.classList.remove('invalido');
+  });
 
   DISC_GRUPOS.forEach(g => {
     const m = document.querySelector(`input[name="mais-${g.id}"]:checked`);
@@ -689,7 +923,9 @@ function md2html(text) {
 async function gerarRelatorios(d) {
   const primeiroNome = d.nome.split(' ')[0];
 
-  const ctx = `Nome: ${d.nome} | Cargo: ${d.cargo||'N/I'} | Empresa: ${d.empresa||'N/I'} | Segmento: ${d.segmento||'N/I'}
+  const ctx = `Nome: ${d.nome} | Cargo: ${d.cargo||'N/I'} | Empresa: ${d.empresa||'N/I'}
+Tipo de relatório solicitado: ${d.tipo_relatorio}
+Pilares da performance: Tempo=${d.pilar_tempo}/5 | Conhecimento=${d.pilar_conhecimento}/5 | Energia=${d.pilar_energia}/5
 
 PERFIL DISC:
 Dominante: ${d.disc_dominant} | Secundário: ${d.disc_secondary} | Scores: ${d.disc_scores}
@@ -702,9 +938,11 @@ Presentes (score 2–3/6): ${d.sab_presentes}
 Todos os scores: ${d.sab_todos}`;
 
   const pMentorado = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
-Gere um relatório de perfil comportamental para ${primeiroNome} ler — baseado no perfil DISC e nos sabotadores identificados.
+Gere um relatório de perfil comportamental para ${primeiroNome} ler — focado em "${d.tipo_relatorio}".
 Use APENAS o primeiro nome "${primeiroNome}". Tom: direto, humano, sem jargão técnico. Use markdown (## títulos, **negrito**).
 NÃO inclua instruções ao mentor. NÃO mencione Paulo ou a mentoria.
+O relatório deve ser totalmente orientado ao contexto de "${d.tipo_relatorio}" — use exemplos e situações específicas desse contexto.
+Inclua uma seção específica sobre os Pilares da Performance Individual (Tempo, Conhecimento, Energia) com base nas notas fornecidas.
 
 ${ctx}
 
@@ -723,7 +961,11 @@ Estilo natural de comunicação de ${primeiroNome}. O que facilita conexão e o 
 ## 5. O que te move — e o que te trava
 Gatilhos de energia e de travamento com base no perfil e nos sabotadores combinados.
 
-## 6. Seu maior potencial
+## 6. Seus pilares da performance
+Com base nas notas de Tempo (${d.pilar_tempo}/5), Conhecimento (${d.pilar_conhecimento}/5) e Energia (${d.pilar_energia}/5), analise:
+O que cada nota revela sobre ${primeiroNome}. Qual pilar está travando mais. O que focar primeiro para destravar a performance no contexto de ${d.tipo_relatorio}.
+
+## 7. Seu maior potencial
 O que ${primeiroNome} pode se tornar quando os sabotadores perderem força. Onde está o potencial ainda não aproveitado.`;
 
   const pMentor = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
@@ -787,7 +1029,9 @@ async function salvarSheets(d, rel) {
       headers:{'Content-Type':'text/plain'},
       body:JSON.stringify({
         timestamp:d.timestamp, nome:d.nome, cargo:d.cargo,
-        empresa:d.empresa, segmento:d.segmento, email:d.email,
+        empresa:d.empresa, whatsapp:d.whatsapp, email:d.email,
+        tipo_relatorio:d.tipo_relatorio,
+        pilar_tempo:d.pilar_tempo, pilar_conhecimento:d.pilar_conhecimento, pilar_energia:d.pilar_energia,
         disc_dominant:d.disc_dominant, disc_secondary:d.disc_secondary,
         disc_scores:d.disc_scores,
         mais_palavras:d.mais_palavras, menos_palavras:d.menos_palavras,
@@ -830,7 +1074,9 @@ document.getElementById('form-perfil').addEventListener('submit', async function
       emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
         to_name:'Paulo', nome_mentorado:d.nome,
         cargo:d.cargo||'N/I', empresa:d.empresa||'N/I',
-        segmento:d.segmento||'N/I', email_mentorado:d.email,
+        whatsapp:d.whatsapp||'N/I', email_mentorado:d.email,
+        tipo_relatorio:d.tipo_relatorio,
+        pilares:`Tempo=${d.pilar_tempo}/5 | Conhecimento=${d.pilar_conhecimento}/5 | Energia=${d.pilar_energia}/5`,
         disc_dominant:d.disc_dominant, disc_secondary:d.disc_secondary,
         disc_scores:d.disc_scores,
         resumo_completo:`DISC: ${d.disc_scores}\nMais: ${d.mais_palavras}\nMenos: ${d.menos_palavras}\n\nSABOTADORES:\nDominantes: ${d.sab_dominantes}\nPresentes: ${d.sab_presentes}\nTodos: ${d.sab_todos}`,
@@ -846,8 +1092,17 @@ document.getElementById('form-perfil').addEventListener('submit', async function
   }
 });
 
-['nome','email'].forEach(id=>{
+['nome','whatsapp','email'].forEach(id=>{
   document.getElementById(id)?.addEventListener('input',function(){this.style.borderColor='';});
+});
+
+
+
+// Limpar invalido do tipo relatório
+document.querySelectorAll('input[name="tipo_relatorio"]').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    document.querySelector('.tipo-card')?.classList.remove('invalido');
+  });
 });
 </script>
 </body>
