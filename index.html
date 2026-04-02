@@ -738,15 +738,35 @@ Gatilhos de comprometimento. O que vai fazer ${primeiroNome} se dedicar de verda
 ## Pilar prioritário Crescer 360°
 Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar primeiro — e por que esse perfil específico precisa começar por aí.`;
 
-  const [r1, r2] = await Promise.all([
-    fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:5000,messages:[{role:'user',content:pMentorado}]})}),
-    fetch(WORKER_URL,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2000,messages:[{role:'user',content:pMentor}]})})
+  const [mentorado, mentor] = await Promise.all([
+    fetchIA(pMentorado, 5000),
+    fetchIA(pMentor, 2000),
   ]);
-  if(!r1.ok||!r2.ok) throw new Error('Erro no servidor');
-  const j1=await r1.json(); const j2=await r2.json();
-  return {mentorado:j1.content[0].text, mentor:j2.content[0].text};
+  return { mentorado, mentor };
+}
+
+// ══════════════════════════════════════════════════════════
+// FALLBACK AUTOMÁTICO DE MODELOS
+// ══════════════════════════════════════════════════════════
+const MODELOS = [
+  'claude-sonnet-4-5',
+  'claude-haiku-4-5-20251001',
+];
+
+async function fetchIA(prompt, maxTokens) {
+  for (const model of MODELOS) {
+    try {
+      const r = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+      });
+      if (!r.ok) { console.warn('Modelo erro:', model, r.status); continue; }
+      const j = await r.json();
+      if (j?.content?.[0]?.text) return j.content[0].text;
+    } catch(e) { console.warn('Modelo falhou:', model, e); }
+  }
+  throw new Error('Todos os modelos falharam');
 }
 
 // ══════════════════════════════════════════════════════════
