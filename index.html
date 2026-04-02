@@ -765,7 +765,7 @@ async function salvarSheets(d, rel) {
         mais_palavras:d.mais_palavras, menos_palavras:d.menos_palavras,
         sab_dominantes:d.sab_dominantes, sab_presentes:d.sab_presentes,
         sab_todos:d.sab_todos,
-        relatorio:rel.substring(0,3000),
+        relatorio:rel.substring(0,50000),
       })
     });
   } catch(e){console.warn('Sheets:',e);}
