@@ -292,16 +292,26 @@ emailjs.init(EMAILJS_PUBLIC_KEY);
 // Grupos ímpares = positivos | pares = negativos
 // ══════════════════════════════════════════════════════════
 const DISC_GRUPOS = [
-  { id:1,  tipo:'pos', palavras:[{t:'Decidido',d:'D'},{t:'Animado',d:'I'},{t:'Paciente',d:'S'},{t:'Organizado',d:'C'}] },
-  { id:2,  tipo:'neg', palavras:[{t:'Impaciente',d:'D'},{t:'Disperso',d:'I'},{t:'Acomodado',d:'S'},{t:'Ansioso',d:'C'}] },
-  { id:3,  tipo:'pos', palavras:[{t:'Corajoso',d:'D'},{t:'Comunicativo',d:'I'},{t:'Leal',d:'S'},{t:'Cuidadoso',d:'C'}] },
-  { id:4,  tipo:'neg', palavras:[{t:'Teimoso',d:'D'},{t:'Agitado',d:'I'},{t:'Passivo',d:'S'},{t:'Perfeccionista',d:'C'}] },
-  { id:5,  tipo:'pos', palavras:[{t:'Direto',d:'D'},{t:'Otimista',d:'I'},{t:'Gentil',d:'S'},{t:'Preciso',d:'C'}] },
-  { id:6,  tipo:'neg', palavras:[{t:'Mandão',d:'D'},{t:'Impulsivo',d:'I'},{t:'Omisso',d:'S'},{t:'Rígido',d:'C'}] },
-  { id:7,  tipo:'pos', palavras:[{t:'Focado',d:'D'},{t:'Inspirador',d:'I'},{t:'Dedicado',d:'S'},{t:'Criterioso',d:'C'}] },
-  { id:8,  tipo:'neg', palavras:[{t:'Controlador',d:'D'},{t:'Inconsequente',d:'I'},{t:'Inseguro',d:'S'},{t:'Frio',d:'C'}] },
-  { id:9,  tipo:'pos', palavras:[{t:'Ambicioso',d:'D'},{t:'Carismático',d:'I'},{t:'Equilibrado',d:'S'},{t:'Analítico',d:'C'}] },
-  { id:10, tipo:'neg', palavras:[{t:'Arrogante',d:'D'},{t:'Dramático',d:'I'},{t:'Dependente',d:'S'},{t:'Desconfiado',d:'C'}] },
+  // Grupo 1 — Decisão
+  { id:1, palavras:[{t:'Decidido',d:'D'},{t:'Animado',d:'I'},{t:'Paciente',d:'S'},{t:'Organizado',d:'C'}] },
+  // Grupo 2 — Liderança
+  { id:2, palavras:[{t:'Corajoso',d:'D'},{t:'Comunicativo',d:'I'},{t:'Leal',d:'S'},{t:'Cuidadoso',d:'C'}] },
+  // Grupo 3 — Ritmo
+  { id:3, palavras:[{t:'Direto',d:'D'},{t:'Otimista',d:'I'},{t:'Gentil',d:'S'},{t:'Preciso',d:'C'}] },
+  // Grupo 4 — Foco
+  { id:4, palavras:[{t:'Focado',d:'D'},{t:'Inspirador',d:'I'},{t:'Dedicado',d:'S'},{t:'Criterioso',d:'C'}] },
+  // Grupo 5 — Ambição
+  { id:5, palavras:[{t:'Ambicioso',d:'D'},{t:'Carismático',d:'I'},{t:'Equilibrado',d:'S'},{t:'Analítico',d:'C'}] },
+  // Grupo 6 — Ação
+  { id:6, palavras:[{t:'Ativo',d:'D'},{t:'Sociável',d:'I'},{t:'Confiável',d:'S'},{t:'Rigoroso',d:'C'}] },
+  // Grupo 7 — Relacionamento
+  { id:7, palavras:[{t:'Independente',d:'D'},{t:'Empático',d:'I'},{t:'Protetor',d:'S'},{t:'Metódico',d:'C'}] },
+  // Grupo 8 — Resultado
+  { id:8, palavras:[{t:'Persistente',d:'D'},{t:'Entusiasmado',d:'I'},{t:'Solidário',d:'S'},{t:'Disciplinado',d:'C'}] },
+  // Grupo 9 — Comunicação
+  { id:9, palavras:[{t:'Franco',d:'D'},{t:'Aberto',d:'I'},{t:'Humilde',d:'S'},{t:'Prudente',d:'C'}] },
+  // Grupo 10 — Realização
+  { id:10, palavras:[{t:'Realizador',d:'D'},{t:'Motivador',d:'I'},{t:'Pacificador',d:'S'},{t:'Planejador',d:'C'}] },
 ];
 
 // ══════════════════════════════════════════════════════════
@@ -406,9 +416,8 @@ const SAB_GRUPOS = [
 const contDisc = document.getElementById('grupos-disc');
 
 DISC_GRUPOS.forEach(g => {
-  const isPOS = g.tipo === 'pos';
-  const tipoClass = isPOS ? 'pos' : 'neg';
-  const tipoLabel = isPOS ? 'Palavras que te descrevem bem' : 'Palavras difíceis mas reais';
+  const tipoClass = 'pos';
+  const tipoLabel = 'Escolha 1 em cada coluna';
 
   const linhasHtml = g.palavras.map((p, i) => `
     <div class="palavra-cell tipo-mais" id="mais-cell-${g.id}-${i}">
@@ -572,10 +581,9 @@ function coletar() {
   DISC_GRUPOS.forEach(g => {
     const vm = document.querySelector(`input[name="mais-${g.id}"]:checked`)?.value;
     const vn = document.querySelector(`input[name="menos-${g.id}"]:checked`)?.value;
-    const peso = g.tipo === 'pos' ? 2 : -2;
-    if (vm) { const [t,d] = vm.split('|'); maisPal.push(t); disc[d] += peso; }
-    if (vn) { const [t,d] = vn.split('|'); menosPal.push(t); disc[d] += (g.tipo==='pos'?-1:1); }
-    detDisc.push(`G${g.id}(${g.tipo}): +${vm?vm.split('|')[0]:'-'} -${vn?vn.split('|')[0]:'-'}`);
+    if (vm) { const [t,d] = vm.split('|'); maisPal.push(t); disc[d] += 2; }
+    if (vn) { const [t,d] = vn.split('|'); menosPal.push(t); disc[d] -= 1; }
+    detDisc.push(`G${g.id}: +${vm?vm.split('|')[0]:'-'} -${vn?vn.split('|')[0]:'-'}`);
   });
 
   const sortedDisc = Object.entries(disc).sort((a,b) => b[1]-a[1]);
