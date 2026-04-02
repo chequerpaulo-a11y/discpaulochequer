@@ -6,7 +6,7 @@
 <title>Perfil Comportamental · Crescer 360°</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <style>
@@ -22,7 +22,6 @@
     --accent-dark: #8a4010;
     --green: #2a6b4a;
     --border: rgba(22,20,15,0.1);
-    --radius: 10px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,184 +35,144 @@
   }
 
   body::after {
-    content: '';
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    opacity: 0.6;
+    content: ''; position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.7;
   }
 
   .page { position: relative; z-index: 1; }
 
   header {
-    background: var(--ink);
-    padding: 52px 24px 44px;
-    text-align: center;
-    position: relative; overflow: hidden;
+    background: var(--ink); padding: 52px 24px 44px;
+    text-align: center; position: relative; overflow: hidden;
   }
 
   header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px);
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px);
   }
 
-  .logo-mark {
-    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
-  }
-
+  .logo-mark { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; }
   .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-
-  .logo-text {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(249,246,240,0.45);
-  }
+  .logo-text { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(249,246,240,0.4); }
 
   header h1 {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(30px, 6vw, 50px);
-    font-weight: 300; line-height: 1.1;
-    color: var(--cream); margin-bottom: 14px;
+    font-family: 'Fraunces', serif; font-size: clamp(30px, 6vw, 50px);
+    font-weight: 300; line-height: 1.1; color: var(--cream); margin-bottom: 14px;
   }
 
   header h1 em { font-style: italic; color: #e08040; }
 
   header p {
     font-size: 15px; color: rgba(249,246,240,0.5);
-    max-width: 420px; margin: 0 auto 28px; line-height: 1.7;
+    max-width: 400px; margin: 0 auto 28px; line-height: 1.7;
   }
 
   .chips-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-
-  .chip {
-    font-size: 11px; padding: 4px 14px; border-radius: 20px;
-    border: 1px solid rgba(249,246,240,0.15);
-    color: rgba(249,246,240,0.45); letter-spacing: 0.04em;
-  }
+  .chip { font-size: 11px; padding: 4px 14px; border-radius: 20px; border: 1px solid rgba(249,246,240,0.15); color: rgba(249,246,240,0.4); }
 
   .prog-wrap {
     background: var(--cream-2); border-bottom: 1px solid var(--border);
-    padding: 12px 24px; position: sticky; top: 0; z-index: 100;
+    padding: 11px 24px; position: sticky; top: 0; z-index: 100;
   }
 
-  .prog-inner {
-    max-width: 680px; margin: 0 auto;
-    display: flex; align-items: center; gap: 12px;
-  }
-
+  .prog-inner { max-width: 660px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
   .prog-track { flex: 1; height: 3px; background: var(--cream-3); border-radius: 2px; overflow: hidden; }
-  .prog-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 0.35s ease; }
+  .prog-fill { height: 100%; background: var(--accent); border-radius: 2px; width: 0%; transition: width 0.3s ease; }
   .prog-label { font-size: 11px; color: var(--ink-3); white-space: nowrap; min-width: 52px; text-align: right; }
 
-  main { max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; }
+  main { max-width: 660px; margin: 0 auto; padding: 36px 20px 80px; }
 
+  /* DADOS */
   .dados-card {
     background: white; border: 1px solid var(--border);
-    border-radius: 14px; padding: 28px; margin-bottom: 40px;
+    border-radius: 14px; padding: 28px; margin-bottom: 36px;
   }
 
-  .dados-card h2 {
-    font-family: 'Fraunces', serif; font-size: 19px;
-    font-weight: 300; margin-bottom: 20px;
-  }
+  .dados-card h2 { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 300; margin-bottom: 20px; }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
   .col-full { grid-column: 1/-1; }
 
   .fld { display: flex; flex-direction: column; gap: 5px; }
-
-  .fld label {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.07em;
-    text-transform: uppercase; color: var(--ink-3);
-  }
-
+  .fld label { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-3); }
   .fld input {
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300;
-    color: var(--ink); background: var(--cream);
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 10px 14px; outline: none; transition: border-color 0.2s;
-    -webkit-appearance: none;
+    color: var(--ink); background: var(--cream); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; outline: none; transition: border-color 0.2s; -webkit-appearance: none;
   }
-
   .fld input:focus { border-color: var(--accent); }
+  .req { color: var(--accent); }
 
+  /* INSTRUÇÃO */
   .instrucao-card {
-    background: var(--accent-light);
-    border: 1px solid rgba(184,92,26,0.2);
-    border-radius: 12px; padding: 18px 22px;
-    margin-bottom: 32px;
+    background: var(--accent-light); border: 1px solid rgba(184,92,26,0.18);
+    border-radius: 12px; padding: 18px 22px; margin-bottom: 28px;
     font-size: 14px; line-height: 1.7; color: var(--ink-2);
   }
-
   .instrucao-card strong { font-weight: 500; color: var(--ink); }
 
-  .legenda {
-    display: flex; gap: 18px; margin-bottom: 28px; flex-wrap: wrap;
-  }
-
-  .leg-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); }
-
-  .leg-cor { width: 16px; height: 16px; border-radius: 4px; }
-  .leg-cor.mais { background: var(--accent); }
-  .leg-cor.menos { background: var(--ink); }
+  /* LEGENDA */
+  .legenda { display: flex; gap: 18px; margin-bottom: 24px; flex-wrap: wrap; }
+  .leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-3); }
+  .leg-cor { width: 14px; height: 14px; border-radius: 3px; }
+  .leg-cor.pos { background: var(--accent); }
+  .leg-cor.neg { background: #4a4640; }
 
   /* GRUPO */
   .grupo {
     background: white; border: 1px solid var(--border);
-    border-radius: 14px; padding: 20px 22px;
+    border-radius: 14px; overflow: hidden;
     margin-bottom: 12px; transition: border-color 0.2s;
   }
 
   .grupo.completo { border-color: rgba(42,107,74,0.4); }
-  .grupo.invalido { border-color: #d04040; background: #fff9f9; }
+  .grupo.invalido { border-color: #d04040; }
 
   .grupo-header {
     display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 14px;
+    padding: 14px 20px 0;
   }
 
-  .grupo-num {
-    font-size: 10px; font-weight: 500; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent);
-    background: var(--accent-light); padding: 3px 10px; border-radius: 20px;
-  }
-
+  .grupo-num { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .grupo-tipo { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+  .grupo-tipo.pos { color: var(--accent); }
+  .grupo-tipo.neg { color: #4a4640; }
   .grupo-status { font-size: 12px; color: var(--ink-3); }
 
-  /* Duas colunas de palavras lado a lado */
+  /* COLUNAS DE PALAVRAS */
   .colunas {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; padding: 14px 14px 16px;
   }
 
-  @media (max-width: 400px) {
-    .colunas { grid-template-columns: 1fr; }
-  }
+  .coluna { padding: 0 6px; }
 
   .coluna-titulo {
     font-size: 11px; font-weight: 500; letter-spacing: 0.07em;
-    text-transform: uppercase; margin-bottom: 8px;
-    display: flex; align-items: center; gap: 6px;
+    text-transform: uppercase; color: var(--ink-3);
+    margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
   }
 
-  .coluna-titulo .bolinha {
-    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
-  }
+  .coluna-titulo .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot.pos { background: var(--accent); }
+  .dot.neg { background: #4a4640; }
 
-  .bolinha.mais { background: var(--accent); }
-  .bolinha.menos { background: var(--ink); }
+  .palavras-col { display: flex; flex-direction: column; gap: 5px; }
 
-  .palavras-col { display: flex; flex-direction: column; gap: 6px; }
-
+  /* RADIO ESTILIZADO */
   .palavra-item { position: relative; }
 
-  .palavra-item input[type="checkbox"] {
+  .palavra-item input[type="radio"] {
     position: absolute; opacity: 0; width: 100%; height: 100%;
     top: 0; left: 0; cursor: pointer; margin: 0;
   }
 
   .palavra-label {
     display: flex; align-items: center; justify-content: center;
-    padding: 9px 10px; border-radius: 7px;
+    padding: 9px 8px; border-radius: 7px;
     border: 1.5px solid var(--border);
     font-size: 14px; font-weight: 400; color: var(--ink-2);
     cursor: pointer; text-align: center; line-height: 1.2;
@@ -222,35 +181,38 @@
   }
 
   .palavra-item:hover .palavra-label {
-    border-color: rgba(184,92,26,0.4);
-    background: var(--accent-light);
+    border-color: rgba(184,92,26,0.3); background: var(--accent-light);
   }
 
-  .tipo-mais input:checked + .palavra-label {
+  /* positivo marcado = laranja */
+  .tipo-pos input:checked + .palavra-label {
     background: var(--accent); border-color: var(--accent);
     color: white; font-weight: 500;
   }
 
-  .tipo-menos input:checked + .palavra-label {
-    background: var(--ink); border-color: var(--ink);
+  /* negativo marcado = escuro */
+  .tipo-neg input:checked + .palavra-label {
+    background: #3a3830; border-color: #3a3830;
     color: white; font-weight: 500;
   }
 
-  .validation-msg {
-    font-size: 12px; color: #d04040; margin-top: 10px; display: none;
+  /* Divisor vertical entre colunas */
+  .col-divider {
+    width: 1px; background: var(--border);
+    margin: 0; align-self: stretch;
   }
 
+  .validation-msg { font-size: 12px; color: #d04040; padding: 0 20px 12px; display: none; }
   .grupo.invalido .validation-msg { display: block; }
 
+  /* SUBMIT */
   .submit-area { text-align: center; padding: 44px 0 0; }
-
   .submit-note { font-size: 13px; color: var(--ink-3); margin-bottom: 24px; line-height: 1.6; }
 
   .btn-enviar {
     font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 500;
     color: white; background: var(--ink); border: none; border-radius: 10px;
-    padding: 16px 52px; cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
+    padding: 16px 52px; cursor: pointer; transition: background 0.2s, transform 0.15s;
   }
 
   .btn-enviar:hover { background: var(--accent); transform: translateY(-1px); }
@@ -264,7 +226,7 @@
   }
 
   /* RESULTADO */
-  #tela-resultado { display: none; padding: 56px 0 80px; }
+  #tela-resultado { display: none; padding: 52px 0 80px; }
 
   .resultado-topo { text-align: center; margin-bottom: 36px; }
 
@@ -272,14 +234,10 @@
     width: 52px; height: 52px; border-radius: 50%;
     background: #e6f4ed; color: var(--green);
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 18px; font-size: 20px; font-weight: 500;
+    margin: 0 auto 16px; font-size: 20px; font-weight: 500;
   }
 
-  #tela-resultado h2 {
-    font-family: 'Fraunces', serif; font-size: 28px;
-    font-weight: 300; margin-bottom: 8px;
-  }
-
+  #tela-resultado h2 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; }
   .resultado-sub { font-size: 14px; color: var(--ink-3); line-height: 1.6; }
 
   #relatorio-card {
@@ -288,10 +246,8 @@
   }
 
   #relatorio-card > h3 {
-    font-family: 'Fraunces', serif; font-size: 20px;
-    font-weight: 300; color: var(--ink);
-    margin-bottom: 24px; padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 300;
+    margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
   }
 
   #relatorio-conteudo { font-size: 14px; line-height: 1.85; color: var(--ink-2); }
@@ -333,15 +289,12 @@
   .btn-pdf {
     font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
     color: white; background: var(--accent); border: none; border-radius: 10px;
-    padding: 13px 38px; cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
+    padding: 13px 38px; cursor: pointer; transition: background 0.2s, transform 0.15s;
     display: inline-flex; align-items: center; gap: 8px;
   }
 
   .btn-pdf:hover { background: var(--accent-dark); transform: translateY(-1px); }
   .btn-pdf:disabled { background: var(--ink-3); cursor: not-allowed; transform: none; }
-
-  .req { color: var(--accent); }
 
   @media print {
     body { background: white !important; }
@@ -364,9 +317,9 @@
     <span class="logo-text">Crescer 360° · Mentoria</span>
   </div>
   <h1>Quem você é<br><em>de verdade?</em></h1>
-  <p>Escolha as palavras que mais e menos te representam. Confie na sua primeira resposta.</p>
+  <p>Escolha a palavra que mais combina com você em cada grupo. Confie na primeira resposta.</p>
   <div class="chips-row">
-    <span class="chip">15 grupos</span>
+    <span class="chip">20 grupos</span>
     <span class="chip">5 minutos</span>
     <span class="chip">Perfil comportamental</span>
   </div>
@@ -375,7 +328,7 @@
 <div class="prog-wrap">
   <div class="prog-inner">
     <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-    <div class="prog-label" id="prog-label">0 de 15</div>
+    <div class="prog-label" id="prog-label">0 de 20</div>
   </div>
 </div>
 
@@ -391,7 +344,7 @@
       </div>
       <div class="fld">
         <label>Cargo</label>
-        <input type="text" id="cargo" placeholder="Ex: Gerente, Dono, Diretor">
+        <input type="text" id="cargo" placeholder="Ex: Gerente, Dono">
       </div>
       <div class="fld">
         <label>Empresa</label>
@@ -409,12 +362,12 @@
   </div>
 
   <div class="instrucao-card">
-    Em cada grupo, marque <strong>1 ou 2 palavras que têm tudo a ver com você</strong> na coluna laranja, e <strong>1 ou 2 palavras que não têm nada a ver com você</strong> na coluna escura. Vá rápido — a primeira resposta costuma ser a mais verdadeira.
+    Em cada grupo, escolha <strong>1 palavra de cada coluna</strong> — a que mais combina com você. Nos grupos de palavras boas, escolha a que mais te representa. Nos grupos de palavras difíceis, escolha a que mais aparece em você.
   </div>
 
   <div class="legenda">
-    <div class="leg-item"><div class="leg-cor mais"></div> Tem tudo a ver comigo</div>
-    <div class="leg-item"><div class="leg-cor menos"></div> Não tem nada a ver comigo</div>
+    <div class="leg-item"><div class="leg-cor pos"></div> Palavras que te descrevem bem</div>
+    <div class="leg-item"><div class="leg-cor neg"></div> Palavras difíceis mas reais</div>
   </div>
 
   <div id="grupos-container"></div>
@@ -454,293 +407,256 @@
 const EMAILJS_PUBLIC_KEY  = 'a9-Dxx_YUDCftzJ41';
 const EMAILJS_SERVICE_ID  = 'service_mzwe4wv';
 const EMAILJS_TEMPLATE_ID = 'template_hprwuey';
-const WORKER_URL = 'https://crescer360-proxy.chequerpaulo.workers.dev';
-const SHEETS_URL = 'https://docs.google.com/spreadsheets/d/1tyU5VN2H3rA9VbjaXYmL0ZIGldoDd9SP8qc6NsI9QAg/edit?gid=0#gid=0';
+const WORKER_URL  = 'https://crescer360-proxy.chequerpaulo.workers.dev';
+const SHEETS_URL  = 'https://script.google.com/macros/s/AKfycbyk5KPWzj4PznHOTFR1jMsLtnSJD4wOpzc5eHWmARtj71pQH1GZe6OBl3IsvCAgl0mn/exec';
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-// ── 15 grupos · 6 palavras cada ──────────────────────────
-// Palavras simples, cotidianas, sem repetição entre grupos.
-// d = perfil DISC  |  s = sabotador associado (opcional)
-// D = Dominância  I = Influência  S = Estabilidade  C = Conformidade
+// ── 20 grupos · 4 palavras por coluna · 1 escolha por coluna ──────────
+// tipo: 'pos' = grupo de positivos | 'neg' = grupo de negativos
+// d = perfil DISC (D/I/S/C)
+// Grupos ímpares = positivos | Grupos pares = negativos
 const GRUPOS = [
-  {
-    id: 1,
-    palavras: [
-      { t: 'Mandão',      d: 'D' },
-      { t: 'Agitado',     d: 'I' },
-      { t: 'Calmo',       d: 'S' },
-      { t: 'Caprichoso',  d: 'C' },
-      { t: 'Corajoso',    d: 'D' },
-      { t: 'Alegre',      d: 'I' },
-    ]
+  // 1 — POSITIVOS
+  { id:1, tipo:'pos',
+    col1: [ {t:'Decidido',d:'D'}, {t:'Corajoso',d:'D'}, {t:'Direto',d:'D'}, {t:'Ativo',d:'D'} ],
+    col2: [ {t:'Alegre',d:'I'},   {t:'Comunicativo',d:'I'}, {t:'Animado',d:'I'}, {t:'Criativo',d:'I'} ]
   },
-  {
-    id: 2,
-    palavras: [
-      { t: 'Decidido',    d: 'D' },
-      { t: 'Animado',     d: 'I' },
-      { t: 'Paciente',    d: 'S' },
-      { t: 'Cuidadoso',   d: 'C' },
-      { t: 'Impaciente',  d: 'D' },
-      { t: 'Disperso',    d: 'I' },
-    ]
+  // 2 — NEGATIVOS
+  { id:2, tipo:'neg',
+    col1: [ {t:'Impaciente',d:'D'}, {t:'Mandão',d:'D'}, {t:'Agressivo',d:'D'}, {t:'Teimoso',d:'D'} ],
+    col2: [ {t:'Disperso',d:'I'},   {t:'Inconsequente',d:'I'}, {t:'Agitado',d:'I'}, {t:'Impulsivo',d:'I'} ]
   },
-  {
-    id: 3,
-    palavras: [
-      { t: 'Franco',      d: 'D' },
-      { t: 'Falante',     d: 'I' },
-      { t: 'Reservado',   d: 'S' },
-      { t: 'Exigente',    d: 'C' },
-      { t: 'Durão',       d: 'D' },
-      { t: 'Tímido',      d: 'S' },
-    ]
+  // 3 — POSITIVOS
+  { id:3, tipo:'pos',
+    col1: [ {t:'Paciente',d:'S'},   {t:'Leal',d:'S'}, {t:'Calmo',d:'S'}, {t:'Dedicado',d:'S'} ],
+    col2: [ {t:'Organizado',d:'C'}, {t:'Caprichoso',d:'C'}, {t:'Cuidadoso',d:'C'}, {t:'Preciso',d:'C'} ]
   },
-  {
-    id: 4,
-    palavras: [
-      { t: 'Ativo',       d: 'D' },
-      { t: 'Entusiasmado',d: 'I' },
-      { t: 'Estável',     d: 'S' },
-      { t: 'Organizado',  d: 'C' },
-      { t: 'Ansioso',     d: 'C' },
-      { t: 'Acomodado',   d: 'S' },
-    ]
+  // 4 — NEGATIVOS
+  { id:4, tipo:'neg',
+    col1: [ {t:'Acomodado',d:'S'}, {t:'Omisso',d:'S'}, {t:'Indeciso',d:'S'}, {t:'Passivo',d:'S'} ],
+    col2: [ {t:'Perfeccionista',d:'C'}, {t:'Ansioso',d:'C'}, {t:'Frio',d:'C'}, {t:'Rígido',d:'C'} ]
   },
-  {
-    id: 5,
-    palavras: [
-      { t: 'Competitivo', d: 'D' },
-      { t: 'Sociável',    d: 'I' },
-      { t: 'Leal',        d: 'S' },
-      { t: 'Perfeccionista', d: 'C' },
-      { t: 'Teimoso',     d: 'D' },
-      { t: 'Inseguro',    d: 'S' },
-    ]
+  // 5 — POSITIVOS
+  { id:5, tipo:'pos',
+    col1: [ {t:'Focado',d:'D'},    {t:'Realizado',d:'D'}, {t:'Persistente',d:'D'}, {t:'Confiante',d:'D'} ],
+    col2: [ {t:'Empático',d:'I'},  {t:'Entusiasmado',d:'I'}, {t:'Inspirador',d:'I'}, {t:'Otimista',d:'I'} ]
   },
-  {
-    id: 6,
-    palavras: [
-      { t: 'Líder',       d: 'D' },
-      { t: 'Divertido',   d: 'I' },
-      { t: 'Prestativo',  d: 'S' },
-      { t: 'Detalhista',  d: 'C' },
-      { t: 'Controlador', d: 'D' },
-      { t: 'Dependente',  d: 'S' },
-    ]
+  // 6 — NEGATIVOS
+  { id:6, tipo:'neg',
+    col1: [ {t:'Controlador',d:'D'}, {t:'Arrogante',d:'D'}, {t:'Explosivo',d:'D'}, {t:'Autoritário',d:'D'} ],
+    col2: [ {t:'Ansioso por aprovação',d:'I'}, {t:'Superficial',d:'I'}, {t:'Dramático',d:'I'}, {t:'Incoerente',d:'I'} ]
   },
-  {
-    id: 7,
-    palavras: [
-      { t: 'Rápido',      d: 'D' },
-      { t: 'Criativo',    d: 'I' },
-      { t: 'Tranquilo',   d: 'S' },
-      { t: 'Criterioso',  d: 'C' },
-      { t: 'Explosivo',   d: 'D' },
-      { t: 'Fechado',     d: 'C' },
-    ]
+  // 7 — POSITIVOS
+  { id:7, tipo:'pos',
+    col1: [ {t:'Protetor',d:'S'},  {t:'Gentil',d:'S'}, {t:'Equilibrado',d:'S'}, {t:'Prestativo',d:'S'} ],
+    col2: [ {t:'Analítico',d:'C'}, {t:'Metódico',d:'C'}, {t:'Disciplinado',d:'C'}, {t:'Criterioso',d:'C'} ]
   },
-  {
-    id: 8,
-    palavras: [
-      { t: 'Direto',      d: 'D' },
-      { t: 'Otimista',    d: 'I' },
-      { t: 'Gentil',      d: 'S' },
-      { t: 'Preciso',     d: 'C' },
-      { t: 'Grosseiro',   d: 'D' },
-      { t: 'Negativo',    d: 'C' },
-    ]
+  // 8 — NEGATIVOS
+  { id:8, tipo:'neg',
+    col1: [ {t:'Dependente',d:'S'}, {t:'Covarde',d:'S'}, {t:'Conformado',d:'S'}, {t:'Inseguro',d:'S'} ],
+    col2: [ {t:'Crítico demais',d:'C'}, {t:'Fechado',d:'C'}, {t:'Desconfiado',d:'C'}, {t:'Detalhista demais',d:'C'} ]
   },
-  {
-    id: 9,
-    palavras: [
-      { t: 'Independente',d: 'D' },
-      { t: 'Comunicativo',d: 'I' },
-      { t: 'Dedicado',    d: 'S' },
-      { t: 'Rigoroso',    d: 'C' },
-      { t: 'Arrogante',   d: 'D' },
-      { t: 'Omisso',      d: 'S' },
-    ]
+  // 9 — POSITIVOS
+  { id:9, tipo:'pos',
+    col1: [ {t:'Ambicioso',d:'D'}, {t:'Pioneiro',d:'D'}, {t:'Estratégico',d:'D'}, {t:'Independente',d:'D'} ],
+    col2: [ {t:'Sociável',d:'I'},  {t:'Carismático',d:'I'}, {t:'Motivador',d:'I'}, {t:'Aberto',d:'I'} ]
   },
-  {
-    id: 10,
-    palavras: [
-      { t: 'Objetivo',    d: 'D' },
-      { t: 'Empático',    d: 'I' },
-      { t: 'Equilibrado', d: 'S' },
-      { t: 'Lógico',      d: 'C' },
-      { t: 'Frio',        d: 'C' },
-      { t: 'Covarde',     d: 'S' },
-    ]
+  // 10 — NEGATIVOS
+  { id:10, tipo:'neg',
+    col1: [ {t:'Prepotente',d:'D'}, {t:'Imprudente',d:'D'}, {t:'Workaholic',d:'D'}, {t:'Insensível',d:'D'} ],
+    col2: [ {t:'Procrastinador',d:'I'}, {t:'Irresponsável',d:'I'}, {t:'Distraído',d:'I'}, {t:'Vago',d:'I'} ]
   },
-  {
-    id: 11,
-    palavras: [
-      { t: 'Ambicioso',   d: 'D' },
-      { t: 'Inspirador',  d: 'I' },
-      { t: 'Protetor',    d: 'S' },
-      { t: 'Prudente',    d: 'C' },
-      { t: 'Egocêntrico', d: 'D' },
-      { t: 'Passivo',     d: 'S' },
-    ]
+  // 11 — POSITIVOS
+  { id:11, tipo:'pos',
+    col1: [ {t:'Tranquilo',d:'S'}, {t:'Solidário',d:'S'}, {t:'Humilde',d:'S'}, {t:'Confiável',d:'S'} ],
+    col2: [ {t:'Rigoroso',d:'C'}, {t:'Lógico',d:'C'}, {t:'Prudente',d:'C'}, {t:'Sistemático',d:'C'} ]
   },
-  {
-    id: 12,
-    palavras: [
-      { t: 'Confiante',   d: 'D' },
-      { t: 'Carismático', d: 'I' },
-      { t: 'Humilde',     d: 'S' },
-      { t: 'Cauteloso',   d: 'C' },
-      { t: 'Prepotente',  d: 'D' },
-      { t: 'Medroso',     d: 'C' },
-    ]
+  // 12 — NEGATIVOS
+  { id:12, tipo:'neg',
+    col1: [ {t:'Tímido',d:'S'}, {t:'Resistente à mudança',d:'S'}, {t:'Medroso',d:'S'}, {t:'Paralisado',d:'S'} ],
+    col2: [ {t:'Inflexível',d:'C'}, {t:'Pessimista',d:'C'}, {t:'Obsessivo',d:'C'}, {t:'Isolado',d:'C'} ]
   },
-  {
-    id: 13,
-    palavras: [
-      { t: 'Persistente', d: 'D' },
-      { t: 'Aberto',      d: 'I' },
-      { t: 'Compreensivo',d: 'S' },
-      { t: 'Disciplinado',d: 'C' },
-      { t: 'Impulsivo',   d: 'D' },
-      { t: 'Indeciso',    d: 'S' },
-    ]
+  // 13 — POSITIVOS
+  { id:13, tipo:'pos',
+    col1: [ {t:'Líder',d:'D'},    {t:'Executor',d:'D'}, {t:'Objetivo',d:'D'}, {t:'Eficiente',d:'D'} ],
+    col2: [ {t:'Divertido',d:'I'}, {t:'Espontâneo',d:'I'}, {t:'Envolvente',d:'I'}, {t:'Popular',d:'I'} ]
   },
-  {
-    id: 14,
-    palavras: [
-      { t: 'Focado',      d: 'D' },
-      { t: 'Espontâneo',  d: 'I' },
-      { t: 'Solidário',   d: 'S' },
-      { t: 'Metódico',    d: 'C' },
-      { t: 'Workaholic',  d: 'D' },
-      { t: 'Procrastinador', d: 'S' },
-    ]
+  // 14 — NEGATIVOS
+  { id:14, tipo:'neg',
+    col1: [ {t:'Dominador',d:'D'}, {t:'Turrão',d:'D'}, {t:'Precipitado',d:'D'}, {t:'Calculista',d:'D'} ],
+    col2: [ {t:'Dependente de elogio',d:'I'}, {t:'Instável',d:'I'}, {t:'Prolixo',d:'I'}, {t:'Exagerado',d:'I'} ]
   },
-  {
-    id: 15,
-    palavras: [
-      { t: 'Realizador',  d: 'D' },
-      { t: 'Motivador',   d: 'I' },
-      { t: 'Pacificador', d: 'S' },
-      { t: 'Analítico',   d: 'C' },
-      { t: 'Autoritário', d: 'D' },
-      { t: 'Conformado',  d: 'S' },
-    ]
+  // 15 — POSITIVOS
+  { id:15, tipo:'pos',
+    col1: [ {t:'Pacificador',d:'S'}, {t:'Compreensivo',d:'S'}, {t:'Mediador',d:'S'}, {t:'Tolerante',d:'S'} ],
+    col2: [ {t:'Exato',d:'C'},       {t:'Técnico',d:'C'}, {t:'Planejador',d:'C'}, {t:'Cauteloso',d:'C'} ]
+  },
+  // 16 — NEGATIVOS
+  { id:16, tipo:'neg',
+    col1: [ {t:'Evitador de conflito',d:'S'}, {t:'Sem posição',d:'S'}, {t:'Ingênuo',d:'S'}, {t:'Servil',d:'S'} ],
+    col2: [ {t:'Neurótico',d:'C'}, {t:'Lento demais',d:'C'}, {t:'Incapaz de delegar',d:'C'}, {t:'Egocêntrico',d:'C'} ]
+  },
+  // 17 — POSITIVOS
+  { id:17, tipo:'pos',
+    col1: [ {t:'Franco',d:'D'}, {t:'Determinado',d:'D'}, {t:'Resolutivo',d:'D'}, {t:'Desafiador',d:'D'} ],
+    col2: [ {t:'Acolhedor',d:'I'}, {t:'Generoso',d:'I'}, {t:'Expressivo',d:'I'}, {t:'Conectado',d:'I'} ]
+  },
+  // 18 — NEGATIVOS
+  { id:18, tipo:'neg',
+    col1: [ {t:'Intransigente',d:'D'}, {t:'Reativo',d:'D'}, {t:'Bruto',d:'D'}, {t:'Descuidado',d:'D'} ],
+    col2: [ {t:'Ansioso',d:'I'}, {t:'Superficial',d:'I'}, {t:'Dependente',d:'I'}, {t:'Inconsequente',d:'I'} ]
+  },
+  // 19 — POSITIVOS
+  { id:19, tipo:'pos',
+    col1: [ {t:'Firme',d:'S'},    {t:'Responsável',d:'S'}, {t:'Presente',d:'S'}, {t:'Cuidador',d:'S'} ],
+    col2: [ {t:'Detalhista',d:'C'}, {t:'Consistente',d:'C'}, {t:'Criterioso',d:'C'}, {t:'Confiável',d:'C'} ]
+  },
+  // 20 — NEGATIVOS
+  { id:20, tipo:'neg',
+    col1: [ {t:'Agressivo',d:'D'}, {t:'Impulsivo',d:'D'}, {t:'Egoísta',d:'D'}, {t:'Cruel',d:'D'} ],
+    col2: [ {t:'Procrastinador',d:'S'}, {t:'Acomodado',d:'S'}, {t:'Omisso',d:'S'}, {t:'Fraco',d:'S'} ]
   },
 ];
 
-// ── Renderizar grupos ────────────────────────────────────
+// ── Definir rótulos de cada coluna por tipo e id ─────────
+function rotulosColunas(g) {
+  if (g.tipo === 'pos') {
+    // col1 sempre D ou S, col2 sempre I ou C
+    const d1 = g.col1[0].d, d2 = g.col2[0].d;
+    return {
+      c1: d1 === 'D' ? 'Perfil executor' : 'Perfil estável',
+      c2: d2 === 'I' ? 'Perfil influente' : 'Perfil analítico'
+    };
+  }
+  return { c1: 'Coluna A', c2: 'Coluna B' };
+}
+
+// ── Renderizar ───────────────────────────────────────────
 const container = document.getElementById('grupos-container');
 
 GRUPOS.forEach(g => {
+  const isPOS = g.tipo === 'pos';
+  const tipoLabel = isPOS ? 'Palavras que te descrevem' : 'Palavras difíceis mas reais';
+  const tipoClass = isPOS ? 'pos' : 'neg';
+
+  const palavrasHtml = (col, tipo, gid) => col.map((p, i) => `
+    <div class="palavra-item tipo-${tipo}">
+      <input type="radio" name="${tipo}-${gid}" id="${tipo}-${gid}-${i}" value="${p.t}|${p.d}">
+      <label class="palavra-label" for="${tipo}-${gid}-${i}">${p.t}</label>
+    </div>
+  `).join('');
+
   const div = document.createElement('div');
   div.className = 'grupo';
   div.id = 'grupo-' + g.id;
 
-  const palavrasHtml = (tipo) => g.palavras.map((p, i) => `
-    <div class="palavra-item tipo-${tipo}">
-      <input type="checkbox" name="${tipo}-${g.id}" id="${tipo}-${g.id}-${i}" value="${p.t}|${p.d}">
-      <label class="palavra-label" for="${tipo}-${g.id}-${i}">${p.t}</label>
-    </div>
-  `).join('');
-
   div.innerHTML = `
     <div class="grupo-header">
       <span class="grupo-num">Grupo ${g.id}</span>
-      <span class="grupo-status" id="status-${g.id}">Selecione nas duas colunas</span>
+      <span class="grupo-tipo ${tipoClass}">${tipoLabel}</span>
+      <span class="grupo-status" id="status-${g.id}">escolha 1 em cada</span>
     </div>
     <div class="colunas">
-      <div>
-        <div class="coluna-titulo"><div class="bolinha mais"></div> Tem a ver comigo</div>
-        <div class="palavras-col">${palavrasHtml('mais')}</div>
+      <div class="coluna">
+        <div class="coluna-titulo"><div class="dot ${tipoClass}"></div> Opção A</div>
+        <div class="palavras-col">${palavrasHtml(g.col1, 'c1g', g.id)}</div>
       </div>
-      <div>
-        <div class="coluna-titulo"><div class="bolinha menos"></div> Não tem a ver</div>
-        <div class="palavras-col">${palavrasHtml('menos')}</div>
+      <div class="col-divider"></div>
+      <div class="coluna">
+        <div class="coluna-titulo"><div class="dot ${tipoClass}"></div> Opção B</div>
+        <div class="palavras-col">${palavrasHtml(g.col2, 'c2g', g.id)}</div>
       </div>
     </div>
-    <div class="validation-msg">Marque ao menos 1 palavra em cada coluna.</div>
+    <div class="validation-msg">Escolha 1 palavra em cada coluna.</div>
   `;
 
   container.appendChild(div);
 });
 
-// ── Máximo 2 por coluna ──────────────────────────────────
+// ── Progresso e status ───────────────────────────────────
 document.addEventListener('change', e => {
-  const cb = e.target;
-  if (cb.type !== 'checkbox') return;
-
-  const todos = document.querySelectorAll(`input[name="${cb.name}"]`);
-  const marcados = [...todos].filter(c => c.checked);
-  if (marcados.length > 2) { cb.checked = false; return; }
-
-  const [tipo, gid] = cb.name.split('-');
-  atualizarStatus(gid);
+  if (e.target.type !== 'radio') return;
+  const name = e.target.name; // c1g-N ou c2g-N
+  const gid = name.split('-')[1];
+  atualizarGrupo(gid);
   updateProgress();
 });
 
-function atualizarStatus(gid) {
-  const temMais  = document.querySelector(`input[name="mais-${gid}"]:checked`);
-  const temMenos = document.querySelector(`input[name="menos-${gid}"]:checked`);
-  const card     = document.getElementById('grupo-' + gid);
-  const status   = document.getElementById('status-' + gid);
+function atualizarGrupo(gid) {
+  const c1 = document.querySelector(`input[name="c1g-${gid}"]:checked`);
+  const c2 = document.querySelector(`input[name="c2g-${gid}"]:checked`);
+  const card = document.getElementById('grupo-' + gid);
+  const status = document.getElementById('status-' + gid);
 
-  if (temMais && temMenos) {
-    card.classList.add('completo');
-    card.classList.remove('invalido');
-    status.textContent = '✓ Pronto';
-    status.style.color = 'var(--green)';
-  } else if (temMais || temMenos) {
+  if (c1 && c2) {
+    card.classList.add('completo'); card.classList.remove('invalido');
+    status.textContent = '✓ Pronto'; status.style.color = 'var(--green)';
+  } else if (c1 || c2) {
     card.classList.remove('completo');
-    status.textContent = 'Falta uma coluna';
-    status.style.color = 'var(--ink-3)';
+    status.textContent = 'Falta uma coluna'; status.style.color = 'var(--ink-3)';
   } else {
     card.classList.remove('completo');
-    status.textContent = 'Selecione nas duas colunas';
-    status.style.color = 'var(--ink-3)';
+    status.textContent = 'escolha 1 em cada'; status.style.color = 'var(--ink-3)';
   }
 }
 
 function updateProgress() {
   let n = 0;
   GRUPOS.forEach(g => {
-    const m = document.querySelector(`input[name="mais-${g.id}"]:checked`);
-    const l = document.querySelector(`input[name="menos-${g.id}"]:checked`);
-    if (m && l) n++;
+    const c1 = document.querySelector(`input[name="c1g-${g.id}"]:checked`);
+    const c2 = document.querySelector(`input[name="c2g-${g.id}"]:checked`);
+    if (c1 && c2) n++;
   });
   const pct = Math.round((n / GRUPOS.length) * 100);
   document.getElementById('prog-fill').style.width = pct + '%';
   document.getElementById('prog-label').textContent = n + ' de ' + GRUPOS.length;
 }
 
-// ── Coletar e calcular DISC ──────────────────────────────
+// ── Coletar e calcular ───────────────────────────────────
 function coletar() {
-  const disc = { D:{m:0,l:0}, I:{m:0,l:0}, S:{m:0,l:0}, C:{m:0,l:0} };
-  const maisPal = [], menosPal = [], det = [];
+  // DISC: positivos = +2, negativos = -2 (mais peso que neutro)
+  const disc = { D: 0, I: 0, S: 0, C: 0 };
+  const escolhas = [];
+  const det = [];
 
   GRUPOS.forEach(g => {
-    const mais  = [...document.querySelectorAll(`input[name="mais-${g.id}"]:checked`)].map(c => c.value);
-    const menos = [...document.querySelectorAll(`input[name="menos-${g.id}"]:checked`)].map(c => c.value);
+    const v1 = document.querySelector(`input[name="c1g-${g.id}"]:checked`)?.value;
+    const v2 = document.querySelector(`input[name="c2g-${g.id}"]:checked`)?.value;
 
-    mais.forEach(v => { const [t,d] = v.split('|'); maisPal.push(t); if(disc[d]) disc[d].m++; });
-    menos.forEach(v => { const [t,d] = v.split('|'); menosPal.push(t); if(disc[d]) disc[d].l++; });
-    det.push(`G${g.id}: +[${mais.map(v=>v.split('|')[0]).join(', ')}] -[${menos.map(v=>v.split('|')[0]).join(', ')}]`);
+    const peso = g.tipo === 'pos' ? 2 : -2;
+
+    if (v1) {
+      const [t, d] = v1.split('|');
+      disc[d] += peso;
+      escolhas.push({ palavra: t, tipo: g.tipo, perfil: d, col: 'A' });
+    }
+    if (v2) {
+      const [t, d] = v2.split('|');
+      disc[d] += peso;
+      escolhas.push({ palavra: t, tipo: g.tipo, perfil: d, col: 'B' });
+    }
+
+    const t1 = v1 ? v1.split('|')[0] : '-';
+    const t2 = v2 ? v2.split('|')[0] : '-';
+    det.push(`G${g.id}(${g.tipo}): A="${t1}" B="${t2}"`);
   });
 
-  // Score final: (mais - menos) normalizado
-  const scores = {};
-  ['D','I','S','C'].forEach(k => { scores[k] = disc[k].m - disc[k].l; });
+  const sorted = Object.entries(disc).sort((a, b) => b[1] - a[1]);
+  const disc_dominant  = sorted[0][0];
+  const disc_secondary = sorted[1][0];
+  const disc_scores    = `D=${disc.D} | I=${disc.I} | S=${disc.S} | C=${disc.C}`;
 
-  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
-
-  // Intensidade: quantas palavras negativas de cada tipo (sabotadores)
+  // Sabotadores: perfis com score negativo
   const sabotadores = [];
-  if (disc.D.l >= 2) sabotadores.push('Controlador / Autoritário');
-  if (disc.I.l >= 2) sabotadores.push('Disperso / Aprovação');
-  if (disc.S.l >= 2) sabotadores.push('Acomodado / Evitador');
-  if (disc.C.l >= 2) sabotadores.push('Perfeccionista / Hipervigilante');
+  if (disc.D < 0) sabotadores.push('Controlador/Autoritário (D-)');
+  if (disc.I < 0) sabotadores.push('Disperso/Aprovação (I-)');
+  if (disc.S < 0) sabotadores.push('Acomodado/Evitador (S-)');
+  if (disc.C < 0) sabotadores.push('Perfeccionista/Hipervigilante (C-)');
+
+  // Palavras positivas e negativas separadas
+  const posEscolhidas = escolhas.filter(e => e.tipo === 'pos').map(e => e.palavra).join(', ');
+  const negEscolhidas = escolhas.filter(e => e.tipo === 'neg').map(e => e.palavra).join(', ');
 
   return {
     nome:           document.getElementById('nome').value.trim(),
@@ -748,15 +664,13 @@ function coletar() {
     empresa:        document.getElementById('empresa').value.trim(),
     segmento:       document.getElementById('segmento').value.trim(),
     email:          document.getElementById('email').value.trim(),
-    disc_dominant:  sorted[0][0],
-    disc_secondary: sorted[1][0],
-    disc_scores:    `D=${scores.D} | I=${scores.I} | S=${scores.S} | C=${scores.C}`,
-    mais_palavras:  maisPal.join(', '),
-    menos_palavras: menosPal.join(', '),
-    sabotadores:    sabotadores.join('; ') || 'Nenhum padrão dominante',
+    disc_dominant, disc_secondary, disc_scores,
+    sabotadores:    sabotadores.join('; ') || 'Nenhum padrão negativo dominante',
+    pos_escolhidas: posEscolhidas,
+    neg_escolhidas: negEscolhidas,
     detalhes:       det.join('\n'),
     timestamp:      new Date().toLocaleString('pt-BR'),
-    scores,
+    disc,
   };
 }
 
@@ -771,10 +685,10 @@ function validar() {
     document.getElementById('email').style.borderColor = '#d04040'; ok = false;
   }
   GRUPOS.forEach(g => {
-    const m = document.querySelector(`input[name="mais-${g.id}"]:checked`);
-    const l = document.querySelector(`input[name="menos-${g.id}"]:checked`);
+    const c1 = document.querySelector(`input[name="c1g-${g.id}"]:checked`);
+    const c2 = document.querySelector(`input[name="c2g-${g.id}"]:checked`);
     const card = document.getElementById('grupo-' + g.id);
-    if (!m || !l) { card.classList.add('invalido'); ok = false; }
+    if (!c1 || !c2) { card.classList.add('invalido'); ok = false; }
     else card.classList.remove('invalido');
   });
   return ok;
@@ -799,55 +713,58 @@ function md2html(text) {
   }).join('\n');
 }
 
-// ── Gerar relatórios ─────────────────────────────────────
+// ── Relatórios ───────────────────────────────────────────
 async function gerarRelatorios(d) {
   const ctx = `Nome: ${d.nome} | Cargo: ${d.cargo||'N/I'} | Empresa: ${d.empresa||'N/I'} | Segmento: ${d.segmento||'N/I'}
-Perfil DISC: Dominante ${d.disc_dominant} | Secundário ${d.disc_secondary} | Scores: ${d.disc_scores}
-Sabotadores identificados: ${d.sabotadores}
-Palavras que TÊM a ver: ${d.mais_palavras}
-Palavras que NÃO têm a ver: ${d.menos_palavras}`;
+Perfil DISC — Dominante: ${d.disc_dominant} | Secundário: ${d.disc_secondary} | Scores: ${d.disc_scores}
+Sabotadores: ${d.sabotadores}
+Palavras POSITIVAS escolhidas: ${d.pos_escolhidas}
+Palavras NEGATIVAS escolhidas (padrões difíceis): ${d.neg_escolhidas}`;
 
   const pMentorado = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
-Com base nas palavras que ${d.nome} escolheu para se descrever, gere um relatório de perfil comportamental para o próprio mentorado ler.
-Tom: direto, humano, sem jargão. Use o nome ${d.nome}. Use markdown (## para títulos, **negrito** para destaques).
-NÃO inclua instruções ao mentor. NÃO mencione Paulo. Seja específico, não genérico.
+Com base nas palavras que ${d.nome} escolheu para se descrever — tanto as qualidades quanto os padrões difíceis — gere um relatório de perfil comportamental para ${d.nome} ler.
+Tom: direto, humano, sem jargão técnico. Use o nome ${d.nome}. Use markdown (## para títulos, **negrito**).
+NÃO inclua instruções para o mentor. NÃO mencione Paulo ou a mentoria.
 
 ${ctx}
 
 ## 1. Seu jeito de ser
-O que o perfil DISC de ${d.nome} revela sobre como age, decide e se relaciona no dia a dia. Pontos fortes e pontos de atenção reais.
+O que o perfil DISC de ${d.nome} revela sobre como age, decide e se relaciona. Use exemplos práticos do dia a dia.
 
-## 2. O que te trava
-Quais padrões limitantes as palavras negativas revelam em ${d.nome}. Dê nome direto a cada padrão. Como isso aparece na prática.
+## 2. Seus pontos fortes
+O que as palavras positivas escolhidas revelam sobre o melhor de ${d.nome}.
 
-## 3. Como você se comunica
-O que as escolhas revelam sobre como ${d.nome} prefere se comunicar. O que gera conexão e o que gera atrito com outros perfis.
+## 3. O que ainda te trava
+O que as palavras difíceis revelam sobre padrões limitantes de ${d.nome}. Dê nome direto a cada padrão. Seja específico.
 
-## 4. O que te move
-O que energiza ${d.nome} e o que drena com base nas palavras escolhidas.
+## 4. Como você se comunica
+Estilo de comunicação de ${d.nome}. O que facilita e o que complica nas relações.
 
-## 5. Seu maior potencial
-O que as escolhas de ${d.nome} revelam sobre onde está o maior potencial ainda não explorado.`;
+## 5. O que te move
+O que energiza ${d.nome} e o que drena com base no perfil identificado.
+
+## 6. Seu maior potencial
+Onde está o potencial inexplorado de ${d.nome} com base nas escolhas.`;
 
   const pMentor = `Você é assistente do mentor Paulo Chequer (Crescer 360°).
-Relatório EXCLUSIVO PARA O MENTOR sobre ${d.nome}. O mentorado NÃO verá isso.
-Seja estratégico, direto, sem enrolação. Use markdown.
+Relatório EXCLUSIVO PARA O MENTOR — ${d.nome} NÃO verá isso.
+Use markdown. Seja estratégico e direto.
 
 ${ctx}
 
 ## Leitura do perfil
-O que as palavras revelam além do óbvio. Contradições entre positivas e negativas. O que ${d.nome} escolheu inconscientemente.
+O que as palavras positivas E negativas escolhidas revelam em conjunto. O que ${d.nome} escolheu inconscientemente.
 
 ## Como conduzir as sessões
-Tom, ritmo e abordagem certa para esse perfil. O que funciona. O que trava.
+Tom, ritmo e abordagem certa. O que funciona com esse perfil. O que vai travar.
 
-## Pontos de tensão a trabalhar
-Paradoxos internos identificados. O que confrontar, e como fazer isso com cuidado.
+## Tensões internas a trabalhar
+Paradoxos entre positivos e negativos escolhidos. O que confrontar e como.
 
 ## Como engajar ${d.nome}
-Gatilhos específicos de comprometimento. O que vai fazer ${d.nome} se dedicar de verdade.
+Gatilhos de comprometimento específicos desse perfil.
 
-## Pilar prioritário do Crescer 360°
+## Pilar prioritário Crescer 360°
 Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar primeiro e por quê.`;
 
   const [r1, r2] = await Promise.all([
@@ -858,26 +775,35 @@ Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar pr
   ]);
 
   if (!r1.ok || !r2.ok) throw new Error('Erro no servidor');
-  const j1 = await r1.json();
-  const j2 = await r2.json();
+  const j1 = await r1.json(); const j2 = await r2.json();
   return { mentorado: j1.content[0].text, mentor: j2.content[0].text };
 }
 
-// ── Salvar no Sheets ─────────────────────────────────────
+// ── Google Sheets ────────────────────────────────────────
 async function salvarSheets(d, relMentorado) {
-  if (SHEETS_URL === 'https://docs.google.com/spreadsheets/d/1tyU5VN2H3rA9VbjaXYmL0ZIGldoDd9SP8qc6NsI9QAg/edit?gid=0#gid=0') return;
   try {
+    const payload = {
+      timestamp:      d.timestamp,
+      nome:           d.nome,
+      cargo:          d.cargo || '',
+      empresa:        d.empresa || '',
+      segmento:       d.segmento || '',
+      email:          d.email,
+      disc_dominant:  d.disc_dominant,
+      disc_secondary: d.disc_secondary,
+      disc_scores:    d.disc_scores,
+      sabotadores:    d.sabotadores,
+      pos_escolhidas: d.pos_escolhidas,
+      neg_escolhidas: d.neg_escolhidas,
+      relatorio:      relMentorado.substring(0, 3000),
+    };
+
+    // no-cors não retorna resposta, mas grava se o script estiver correto
     await fetch(SHEETS_URL, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        timestamp: d.timestamp, nome: d.nome, cargo: d.cargo,
-        empresa: d.empresa, segmento: d.segmento, email: d.email,
-        disc_dominant: d.disc_dominant, disc_secondary: d.disc_secondary,
-        disc_scores: d.disc_scores, sabotadores: d.sabotadores,
-        mais_palavras: d.mais_palavras, menos_palavras: d.menos_palavras,
-        relatorio: relMentorado.substring(0, 2000),
-      })
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body:    JSON.stringify(payload),
     });
   } catch(e) { console.warn('Sheets:', e); }
 }
@@ -886,14 +812,13 @@ async function salvarSheets(d, relMentorado) {
 document.getElementById('form-perfil').addEventListener('submit', async function(e) {
   e.preventDefault();
   if (!validar()) {
-    const first = document.querySelector('.grupo.invalido, input[style*="d04040"]');
+    const first = document.querySelector('.grupo.invalido');
     if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
     return;
   }
 
   const btn = document.getElementById('btn-enviar');
-  btn.disabled = true;
-  btn.textContent = 'Analisando…';
+  btn.disabled = true; btn.textContent = 'Analisando…';
 
   const d = coletar();
 
@@ -910,19 +835,23 @@ document.getElementById('form-perfil').addEventListener('submit', async function
     el.innerHTML = md2html(mentorado);
     document.getElementById('btn-pdf').disabled = false;
 
+    // E-mail + Sheets em paralelo
     Promise.all([
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name: 'Paulo',
-        nome_mentorado: d.nome,
-        cargo: d.cargo||'N/I', empresa: d.empresa||'N/I',
-        segmento: d.segmento||'N/I', email_mentorado: d.email,
-        disc_dominant: d.disc_dominant, disc_secondary: d.disc_secondary,
-        disc_scores: d.disc_scores,
-        resumo_completo: `Sabotadores: ${d.sabotadores}\nMais: ${d.mais_palavras}\nMenos: ${d.menos_palavras}\n\n${d.detalhes}`,
+        to_name:             'Paulo',
+        nome_mentorado:      d.nome,
+        cargo:               d.cargo||'N/I',
+        empresa:             d.empresa||'N/I',
+        segmento:            d.segmento||'N/I',
+        email_mentorado:     d.email,
+        disc_dominant:       d.disc_dominant,
+        disc_secondary:      d.disc_secondary,
+        disc_scores:         d.disc_scores,
+        resumo_completo:     `Sabotadores: ${d.sabotadores}\nPositivos: ${d.pos_escolhidas}\nNegativos: ${d.neg_escolhidas}\n\n${d.detalhes}`,
         relatorio_mentorado: mentorado,
-        relatorio_mentor: mentor,
+        relatorio_mentor:    mentor,
       }),
-      salvarSheets(d, mentorado)
+      salvarSheets(d, mentorado),
     ]).catch(err => console.error('Envio:', err));
 
   } catch(err) {
