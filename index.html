@@ -830,28 +830,19 @@ const MODELOS = [
   'claude-haiku-4-5-20251001',
 ];
 
-async function fetchIA(prompt, maxTokens, tentativa = 1) {
+async function fetchIA(prompt, maxTokens) {
   for (const model of MODELOS) {
     try {
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 55000); // 55s timeout
       const r = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] }),
-        signal: controller.signal
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
       });
-      clearTimeout(timer);
       if (!r.ok) { console.warn('Modelo erro:', model, r.status); continue; }
       const j = await r.json();
       if (j?.content?.[0]?.text) return j.content[0].text;
     } catch(e) {
       console.warn('Modelo falhou:', model, e);
-      // Retry automático uma vez se for timeout
-      if (tentativa < 2 && (e.name === 'AbortError' || e.name === 'TypeError')) {
-        console.log('Tentando novamente...');
-        return fetchIA(prompt, maxTokens, 2);
-      }
     }
   }
   throw new Error('Todos os modelos falharam');
