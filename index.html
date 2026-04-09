@@ -925,7 +925,7 @@ async function gerarRelatorios(d) {
 
   const ctx = `Nome: ${d.nome} | Cargo: ${d.cargo||'N/I'} | Empresa: ${d.empresa||'N/I'}
 Tipo de relatório solicitado: ${d.tipo_relatorio}
-Pilares da performance: Tempo=${d.pilar_tempo}/5 | Conhecimento=${d.pilar_conhecimento}/5 | Energia=${d.pilar_energia}/5
+Pilares da performance: Tempo=${d.pilar_tempo} | Conhecimento=${d.pilar_conhecimento} | Energia=${d.pilar_energia}
 
 PERFIL DISC:
 Dominante: ${d.disc_dominant} | Secundário: ${d.disc_secondary} | Scores: ${d.disc_scores}
@@ -962,8 +962,7 @@ Estilo natural de comunicação de ${primeiroNome}. O que facilita conexão e o 
 Gatilhos de energia e de travamento com base no perfil e nos sabotadores combinados.
 
 ## 6. Seus pilares da performance
-Com base nas notas de Tempo (${d.pilar_tempo}/5), Conhecimento (${d.pilar_conhecimento}/5) e Energia (${d.pilar_energia}/5), analise:
-O que cada nota revela sobre ${primeiroNome}. Qual pilar está travando mais. O que focar primeiro para destravar a performance no contexto de ${d.tipo_relatorio}.
+Com base nos scores de Tempo (${d.pilar_tempo}), Conhecimento (${d.pilar_conhecimento}) e Energia (${d.pilar_energia}) — onde 0/6 = excelente e 6/6 = crítico — analise: qual pilar está travando mais ${primeiroNome} e o que focar primeiro.
 
 ## 7. Seu maior potencial
 O que ${primeiroNome} pode se tornar quando os sabotadores perderem força. Onde está o potencial ainda não aproveitado.`;
@@ -988,10 +987,9 @@ Gatilhos de comprometimento. O que vai fazer ${primeiroNome} se dedicar de verda
 ## Pilar prioritário Crescer 360°
 Qual pilar (Estratégia, Cultura, Liderança ou Performance Individual) focar primeiro — e por que esse perfil específico precisa começar por aí.`;
 
-  const [mentorado, mentor] = await Promise.all([
-    fetchIA(pMentorado, 5000),
-    fetchIA(pMentor, 2000),
-  ]);
+  // Sequencial para evitar timeout do Worker
+  const mentorado = await fetchIA(pMentorado, 4000);
+  const mentor    = await fetchIA(pMentor, 1500);
   return { mentorado, mentor };
 }
 
@@ -1003,18 +1001,29 @@ const MODELOS = [
   'claude-haiku-4-5-20251001',
 ];
 
-async function fetchIA(prompt, maxTokens) {
+async function fetchIA(prompt, maxTokens, tentativa = 1) {
   for (const model of MODELOS) {
     try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 55000); // 55s timeout
       const r = await fetch(WORKER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] })
+        body: JSON.stringify({ model, max_tokens: maxTokens, messages: [{ role: 'user', content: prompt }] }),
+        signal: controller.signal
       });
+      clearTimeout(timer);
       if (!r.ok) { console.warn('Modelo erro:', model, r.status); continue; }
       const j = await r.json();
       if (j?.content?.[0]?.text) return j.content[0].text;
-    } catch(e) { console.warn('Modelo falhou:', model, e); }
+    } catch(e) {
+      console.warn('Modelo falhou:', model, e);
+      // Retry automático uma vez se for timeout
+      if (tentativa < 2 && (e.name === 'AbortError' || e.name === 'TypeError')) {
+        console.log('Tentando novamente...');
+        return fetchIA(prompt, maxTokens, 2);
+      }
+    }
   }
   throw new Error('Todos os modelos falharam');
 }
